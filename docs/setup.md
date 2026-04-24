@@ -49,3 +49,7 @@ Example `settings.local.json`:
 - **Skill not loading?** Ensure your path matches the trigger in `CLAUDE.md`.
 - **Context saturation high?** Execute the Compaction Protocol at 38%.
 - **Git errors in pre-compact?** Ensure you are at the repository root.
+
+## Agent-Specific Guides
+- **Claude Code CLI**: See [CLAUDE.md](../CLAUDE.md)
+- **Google Antigravity IDE**: See [Antigravity Guide](antigravity-guide.md)

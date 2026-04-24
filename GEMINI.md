@@ -60,6 +60,9 @@ Aperture enforces context discipline. This project enforces it on itself.
 - Verify your own edits: run the shell command, check exit code and diff output.
   Never self-assess correctness — run the oracle.
 
+## Documentation
+- User deployment with Antigravity: `docs/antigravity-guide.md`
+
 ## Commit Protocol (Mandatory)
 Before every commit: (1) update `CHANGELOG.md` under `## [Unreleased]`,
 (2) run `/sync-framework` if any `.claude/` file changed,
