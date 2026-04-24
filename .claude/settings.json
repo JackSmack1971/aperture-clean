@@ -1,88 +1,21 @@
 {
-  "_comment": "Project-scope settings. Commit this file. Personal overrides \u00e2\u2020\u2019 .claude/settings.local.json (git-ignored).",
-  "_doc": "Full schema: https://code.claude.com/docs/en/settings",
-  "model": {
-    "_comment": "TODO: Set preferred model for this project. Override per-task via CLI flag.",
-    "default": "claude-sonnet-4-6"
-  },
-  "context": {
-    "_comment": "Compaction triggers. Manual /compact at 60% is preferred \u00e2\u20ac\u201d auto is a failsafe only.",
-    "auto_compact_threshold": 0.95,
-    "preferred_compact_threshold": 0.6
-  },
+  "model": "claude-sonnet-4-6",
+  "permissions": [
+    {
+      "mode": "acceptEdits",
+      "ask": "none",
+      "deny": ["bash:rm -rf *", "bash:sudo *", "write:.env*"]
+    }
+  ],
   "tools": {
-    "_comment": "Restrict tools to only what this project requires. Each registered tool = startup token cost.",
-    "allowed": [
-      "bash",
-      "read",
-      "write",
-      "edit",
-      "glob",
-      "grep"
-    ],
-    "_disabled_examples": [
-      "web_search",
-      "mcp__heavy_schema_tool"
-    ],
-    "_note": "Add MCP tool names only when required for a specific workflow. Remove when done."
-  },
-  "mcp": {
-    "_comment": "TODO: List only MCP servers required for this project. Each schema loads at startup.",
-    "servers": []
+    "enabled": ["Read", "Write", "Edit", "MultiEdit", "Bash", "Glob", "Grep"]
   },
   "hooks": {
-    "_comment": "PreCompact hook: extracts TodoWrite tasks + modified files before memory wipe.",
-    "_optional_hooks": {
-      "pre_tool_use": null,
-      "post_tool_use": null,
-      "notification": null,
-      "stop": null
-    }
+    "pre_compact": ".claude/hooks/pre-compact.sh",
+    "registry": ".claude/hooks/hooks.json"
   },
-  "permissions": {
-    "_comment": "TODO: Lock down blast radius. Deny destructive operations unless explicitly needed.",
-    "allow": [
-      "read:**",
-      "write:src/**",
-      "write:tests/**",
-      "bash:git *",
-      "bash:npm *",
-      "bash:python *"
-    ],
-    "deny": [
-      "bash:rm -rf *",
-      "bash:sudo *",
-      "bash:curl * | bash",
-      "write:.env*",
-      "write:secrets/**",
-      "write:credentials/**"
-    ]
-  },
-  "extended_thinking": {
-    "_comment": "Cap thinking budget. Unconstrained extended thinking = runaway output token cost.",
-    "budget_tokens": 10000,
-    "effort": "medium",
-    "_valid_effort_values": [
-      "low",
-      "medium",
-      "high",
-      "max"
-    ]
-  },
-  "system_prompt": {
-    "_comment": "Dynamic metadata must NOT be in system prompt \u00e2\u20ac\u201d it breaks prefix cache.",
-    "exclude_dynamic_sections": true
-  },
-  "compilation": {
-    "_comment": "MVCS Compiler settings. Run: scripts/compile-rules.sh [model]",
-    "compilation_model": "claude",
-    "_valid_models": [
-      "claude",
-      "gemini",
-      "universal"
-    ],
-    "_gemini_status": "STUB \u00e2\u20ac\u201d pending RT-1 attention sink research",
-    "compiled_output_dir": ".claude/compiled/"
-  },
-  "hooksFile": ".claude/hooks/hooks.json"
+  "context_thresholds": {
+    "compaction": 0.38,
+    "hard_reset": 0.95
+  }
 }

@@ -1,2 +1,7 @@
 .claude/compiled/
 !.claude/compiled/.gitkeep
+
+# Aperture Framework
+.claude/settings.local.json
+.claude/snapshots/
+*.local.json
