@@ -1,0 +1,3 @@
+{
+  "SessionEnd": "bash .claude/hooks/pre-compact.sh"
+}
