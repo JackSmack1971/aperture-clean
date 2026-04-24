@@ -11,6 +11,7 @@ Developer of **Aperture** — a path-scoped context framework for AI agents. Mai
 Non-negotiable. Violation breaks framework for all users.
 
 **NEVER** modify without human approval/backup:
+
 - `scripts/bootstrap-claude-framework.sh` (installer)
 - `.claudeignore` (ingestion/security)
 - `.claude/settings.json` (permissions)
@@ -41,7 +42,6 @@ Aperture enforces context discipline. This project enforces it on itself.
 - Complete all work in one domain before switching paths. Domain bouncing invalidates
   the prefix cache on every transition.
 
-
 ## Tech Stack
 
 - Shell: Bash 4+ (bootstrap script)
@@ -64,6 +64,7 @@ Aperture enforces context discipline. This project enforces it on itself.
 - User deployment with Antigravity: `docs/antigravity-guide.md`
 
 ## Commit Protocol (Mandatory)
+
 Before every commit: (1) update `CHANGELOG.md` under `## [Unreleased]`,
 (2) run `/sync-framework` if any `.claude/` file changed,
 (3) run `bash scripts/bootstrap-claude-framework.sh --dry-run --quiet`,
@@ -71,5 +72,4 @@ Before every commit: (1) update `CHANGELOG.md` under `## [Unreleased]`,
 
 Commit after each discrete functional change — do not batch unrelated changes.
 Conventional format: `feat|fix|docs|chore|refactor: <imperative description>`
-Full format spec and entry templates: `.agent/rules/changelog-commit.md`
-
+Full format spec and entry templates: `.agents/rules/changelog-commit.md`
