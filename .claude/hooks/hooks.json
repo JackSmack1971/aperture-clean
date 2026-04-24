@@ -1,3 +1,13 @@
 {
-  "SessionEnd": "bash .claude/hooks/pre-compact.sh"
+  "hooks": [
+    {
+      "trigger": "SessionStart",
+      "action": "echo 'APERTURE-CLEAN: Session active. Verify context with /tokens. Review FAILURE_LEDGER.md for anti-patterns. Domain skills will load on path entry.'"
+    },
+    {
+      "trigger": "PreToolUse",
+      "patterns": ["/api/**", "/db/**", "/infra/**", "/sec/**", "/frontend/**"],
+      "action": "echo 'REMINDER: Applying path-scoped domain skill governance. Ensure minimum viable context is maintained.'"
+    }
+  ]
 }
