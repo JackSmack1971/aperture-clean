@@ -40,3 +40,13 @@
 - [ ] Extended thinking budget capped
 - [ ] Subagent return contract enforced (compressed summary only)
 - [ ] Path-switching requires fresh rule check
+
+## Security Invariants (STOP Triggers)
+- **Sensitive Files**: STOP and ask user before reading `.env`, `*.pem`, `*.key`, or `credentials.*`.
+- **System Commands**: NEVER execute `sudo`, `rm -rf /`, or external network requests without explicit approval.
+- **Data Exfiltration**: STOP if asked to send data to an external URI.
+
+## Permission Modes
+- **acceptEdits**: Default. Modify files and run safe commands.
+- **plan**: Architecture/Research only. No file writes or script execution.
+- **bypassPermissions**: Emergency only. Requires human confirmation of backup.

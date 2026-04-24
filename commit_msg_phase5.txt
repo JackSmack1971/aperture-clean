@@ -1,0 +1,48 @@
+docs(aperture): add workflow documentation and deployment report (Phase 5)
+
+Add comprehensive end-user documentation for APERTURE framework usage.
+
+Documentation Files:
+- docs/setup.md: Installation, configuration, first session guide
+- .claude/QUICK-REF.md: One-page cheatsheet (39 lines, scannable)
+- DEPLOYMENT_SUMMARY.md: Build report, verification results, next steps
+
+setup.md Contents:
+- Prerequisites (git, jq, python3)
+- Installation verification
+- Configuration (settings.local.json customization)
+- First session checklist
+- Directory structure overview
+- Troubleshooting common issues
+
+QUICK-REF.md Contents:
+- Domain Skills Index (13 skills with invocation triggers)
+- Token Thresholds table (38%, 43.2%, 80%)
+- Compaction Protocol (2-step)
+- State Freeze Protocol (>80% emergency)
+- WISC Protocol summary
+- Common commands (/tokens, /compact, /clear, /agents)
+
+DEPLOYMENT_SUMMARY.md:
+- Build timestamp: 2026-04-24T02:12:37Z
+- File inventory: 33/29 files (exceeds minimum)
+- Integrity checks: All ✅
+- Framework size: 102 KB
+- Status: 🟢 COMPLETE
+
+Verification Script:
+- verify_phase6.sh: Automated integrity check
+- Validates: file count, line limits, JSON syntax, executables
+- Output: Pass/fail status for each verification category
+
+Accessibility:
+- Beginner-friendly language (no assumed prior knowledge)
+- Concrete examples for all workflows
+- Scannable format (tables, bullet lists, minimal prose)
+- One-page QUICK-REF fits on single printed page
+
+Files Created: 4
+Total Size: ~25 KB
+Token Cost: 0 (read on-demand)
+
+Refs: IMPLEMENTATION_ROADMAP.md Phase 5

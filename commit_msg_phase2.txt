@@ -1,0 +1,36 @@
+feat(aperture): implement skills architecture (Phase 2)
+
+Add 18 skill files (13 domain + 5 operational) for manual context injection.
+
+Domain Skills (Path-Scoped):
+- api-rules: Authentication, contracts, error handling
+- db-rules: Schema safety, query parameterization, performance
+- security-rules: CVE SLOs, cryptography, secret management
+- ci-rules: Pipeline gates, merge requirements, secret handling
+- config-rules: Environment separation, YAML safety
+- dependencies-rules: Lockfile discipline, CVE response, version pinning
+- docs-rules: ADR protocol, doc taxonomy, freshness rules
+- frontend-rules: Component standards, state management, accessibility
+- infra-rules: IaC, deployment strategies, monitoring integration
+- logging-rules: Structured logging, PII redaction, correlation IDs
+- migrations-rules: Rollback-safe DDL, idempotency, data migration separation
+- monitoring-rules: SLO definition, alert fatigue prevention, dashboard standards
+- testing-rules: Test pyramid, coverage thresholds, test data management
+
+Operational Skills (Workflow):
+- pre-compact: State extraction before /compact (template)
+- state-freeze: Emergency handover protocol (>80% saturation)
+- mvcs-debugging: 300-600 token debug context template
+- mvcs-synthesis: 500-800 token feature context template
+- mvcs-refactor: 600-1000 token refactor template
+
+CLI Adaptation:
+- Manual invocation required (no auto-injection in CLI)
+- Skills indexed in CLAUDE.md Domain Skills table
+- Each skill links to full rules file (on-demand reading)
+
+Files Created: 18 SKILL.md files
+Total Size: ~35 KB
+Token Cost: Zero until skill invoked
+
+Refs: IMPLEMENTATION_ROADMAP.md Phase 2
