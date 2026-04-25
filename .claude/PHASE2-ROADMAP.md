@@ -101,3 +101,11 @@
 
 **Estimated Timeline:** 2-3 weeks  
 **Approval Gate:** Phase 2 Completion Report with runtime validation evidence
+
+---
+
+## Supporting Documentation
+
+- **[Phase 2 Onboarding Brief](PHASE2-ONBOARDING.md):** Quick-start guide for developers implementing Phase 2 objectives.
+- **[Runtime Validation Checklist](RUNTIME-VALIDATION-CHECKLIST.md):** Manual test protocol for Phase 1 integration validation.
+- **[Phase 1 Walkthrough](PHASE1-WALKTHROUGH.md):** Architectural context for Phase 1 refactor.

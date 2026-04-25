@@ -1,7 +1,7 @@
 # File Topology — Aperture Framework
 <!-- Injected when agent reads any file in the project root or needs architectural awareness -->
 
-## The 25-File Framework
+## The 61-File Framework (as of Phase 1)
 
 ### Layer 1 — Root (2 files)
 | File | Purpose | Mutability |
@@ -64,3 +64,71 @@ All files in `.claude/rules/` follow the canonical schema. See `contribution-pro
 `scripts/framework/` is a byte-for-byte copy of the live framework files.
 Any edit to a live file requires a corresponding update to its mirror in `scripts/framework/`.
 Run `/sync-framework` after any rule file or template change.
+
+---
+## Updated Topology (Post-Phase 1)
+
+Generated: 2026-04-24
+
+.claude/DEPRECATED.md
+.claude/PHASE1-WALKTHROUGH.md
+.claude/PHASE2-ONBOARDING.md
+.claude/PHASE2-ROADMAP.md
+.claude/QUICK-REF.md
+.claude/RUNTIME-VALIDATION-CHECKLIST.md
+.claude/compiled/.gitkeep
+.claude/hooks/hooks.json
+.claude/hooks/pre-compact.sh
+.claude/hooks/pre-tool-use.sh
+.claude/rules/.gitkeep
+.claude/rules/api.md
+.claude/rules/ci.md
+.claude/rules/config.md
+.claude/rules/db.md
+.claude/rules/dependencies.md
+.claude/rules/docs.md
+.claude/rules/frontend.md
+.claude/rules/infra.md
+.claude/rules/logging.md
+.claude/rules/migrations.md
+.claude/rules/monitoring.md
+.claude/rules/security.md
+.claude/rules/testing.md
+.claude/settings.json
+.claude/settings.local.json
+.claude/skills/.gitkeep
+.claude/skills/api-rules/SKILL.md
+.claude/skills/ci-rules/SKILL.md
+.claude/skills/config-rules/SKILL.md
+.claude/skills/context-meter/SKILL.md
+.claude/skills/db-rules/SKILL.md
+.claude/skills/dependencies-rules/SKILL.md
+.claude/skills/docs-rules/SKILL.md
+.claude/skills/frontend-rules/SKILL.md
+.claude/skills/infra-rules/SKILL.md
+.claude/skills/load-rules/SKILL.md
+.claude/skills/logging-rules/SKILL.md
+.claude/skills/migrations-rules/SKILL.md
+.claude/skills/monitoring-rules/SKILL.md
+.claude/skills/mvcs-debugging/SKILL.md
+.claude/skills/mvcs-refactor/SKILL.md
+.claude/skills/mvcs-synthesis/SKILL.md
+.claude/skills/pre-compact/SKILL.md
+.claude/skills/security-rules/SKILL.md
+.claude/skills/state-freeze/SKILL.md
+.claude/skills/testing-rules/SKILL.md
+.claude/skills/validate-subagent-return/SKILL.md
+.claude/snapshots/.gitkeep
+.claude/snapshots/aperture-scores.jsonl
+.claude/snapshots/pre-compact-20260424-011911.md
+.claude/snapshots/pre-compact-{timestamp}.md
+.claude/templates/.gitkeep
+.claude/templates/COMPACTION.md
+.claude/templates/FAILURE_LEDGER.md
+.claude/templates/HANDOVER.md
+.claude/templates/MVCS-DEBUGGING.md
+.claude/templates/MVCS-REFACTOR.md
+.claude/templates/MVCS-SYNTHESIS.md
+.claude/templates/STATE-FREEZE.md
+.claude/templates/SUBAGENT.md
+

@@ -408,6 +408,14 @@ unchanged. The shell stays the same. The engine changes.*
 *The math has been done. The question is only implementation order.*
 
 ---
+
+## Phase 2: Next Steps
+
+Phase 1 (Native Alignment Refactor) is complete. For detailed Phase 2 objectives (ADS Automation, Pareto Ledger Curation), see:
+
+**[Phase 2 Roadmap](.claude/PHASE2-ROADMAP.md)**
+
+---
 **Roadmap Version:** 1.0
 **Research basis:** 5-questions-answered.md (attached empirical analyses)
 **Maintained by:** Aperture core team

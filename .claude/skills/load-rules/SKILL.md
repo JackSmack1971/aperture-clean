@@ -1,4 +1,6 @@
-# Skill: Load Rules (Path-Scoped Injection)
+# Skill: Load Rules (DEPRECATED)
+> **DEPRECATED (Phase 1):** Manual rule-loading superseded by native path-scoped injection. This skill is preserved for historical reference only. See `.claude/DEPRECATED.md`.
+
 <!-- APERTURE-CLEAN Skill | Manual Loader -->
 
 Use this skill whenever you transition to a new domain or directory. This mitigates the lack of automatic path-based rule injection in Claude Code.

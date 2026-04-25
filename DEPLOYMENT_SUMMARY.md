@@ -15,8 +15,8 @@
 - **Git Integration**: 🟢 Passed (.gitignore patched)
 
 ## First Use Checklist
-1. [ ] Read [setup.md](file:///c:/workspaces/aperture-clean/docs/setup.md) for full configuration details.
-2. [ ] Review [.claude/QUICK-REF.md](file:///c:/workspaces/aperture-clean/.claude/QUICK-REF.md) for CLI commands and thresholds.
+1. [ ] Read [setup.md](docs/setup.md) for full configuration details.
+2. [ ] Review [.claude/QUICK-REF.md](.claude/QUICK-REF.md) for CLI commands and thresholds.
 3. [ ] Run `bash .claude/hooks/pre-compact.sh` to verify state extraction.
 4. [ ] Check `/tokens` to see context baseline.
 

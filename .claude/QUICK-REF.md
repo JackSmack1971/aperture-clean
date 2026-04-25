@@ -8,7 +8,8 @@
 | 43.2% | **CLI CLIFF** | Reasoning Collapse |
 | 80.0% | `HANDOVER` | Hard Reset Required |
 
-## Domain Skills Index
+## Domain Rule Injection (Native)
+_Native path-scoped rules replace the manual index._
 | Domain | Path | Rule File |
 |:---|:---|:---|
 | API | `/api/**` | `api.md` |

@@ -27,20 +27,20 @@
 
 ## Key Files (Single Source of Truth)
 
-### [CLAUDE.md](file:///c:/workspaces/aperture-clean/CLAUDE.md)
+### [CLAUDE.md](CLAUDE.md)
 **Role**: The "Root Law". 
 - Defines global constraints, the WISC protocol, and the path-scoped rule index.
 - **Invariants**: Must not exceed 100 lines. Static content only.
-- [L32-L38](file:///c:/workspaces/aperture-clean/CLAUDE.md#L32-L38): Compaction and State Freeze protocols.
-- [L51-L64](file:///c:/workspaces/aperture-clean/CLAUDE.md#L51-L64): Path-scoped injection mapping.
+- [L32-L38](CLAUDE.md#compaction--state-freeze): Compaction and State Freeze protocols.
+- [L51-L64](CLAUDE.md#operational-skills): Path-scoped injection mapping.
 
-### [GEMINI.md](file:///c:/workspaces/aperture-clean/GEMINI.md)
+### [GEMINI.md](GEMINI.md)
 **Role**: Antigravity agent context.
 - Contains absolute invariants and dogfooding laws for the agent currently managing the repo.
-- [L9-L21](file:///c:/workspaces/aperture-clean/GEMINI.md#L9-L21): Hard stops for framework integrity.
-- [L63-L71](file:///c:/workspaces/aperture-clean/GEMINI.md#L63-L71): Mandatory commit protocols.
+- [L9-L21](GEMINI.md#absolute-invariants-hard-stops): Hard stops for framework integrity.
+- [L63-L71](GEMINI.md#commit-protocol-mandatory): Mandatory commit protocols.
 
-### [bootstrap-claude-framework.sh](file:///c:/workspaces/aperture-clean/scripts/bootstrap-claude-framework.sh)
+### [bootstrap-claude-framework.sh](scripts/bootstrap-claude-framework.sh)
 **Role**: Idempotent installer.
 - Handles the 6-phase installation and validation of the framework.
 - Any modifications require human approval and rigorous dry-run testing.

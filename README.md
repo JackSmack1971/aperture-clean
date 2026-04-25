@@ -480,7 +480,7 @@ Aperture is a framework, not a library — it evolves with real-world usage patt
 
 **Token economics data** — if you have measured cache hit rates, token reduction percentages, or session cost comparisons using this framework vs. without, share them. The case for context engineering is best made with real numbers.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+See the project documentation for contribution guidelines.
 
 ---
 
