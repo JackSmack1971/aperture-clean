@@ -25,6 +25,7 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
 
 ### Fixed
+- **SDO-H-06**: Updated framework source `settings.json` with corrected context thresholds (0.38/0.432/0.80).
 - **SDO-M-06**: Patched `scripts/ads-lint.sh` to remove `NEVER` from positive anchor count and add `RESTRICTED`/`REQUIRED` directives.
 - **Framework Portability**: Resolved hook system incompatibility by implementing redundant manual protocols across CLAUDE.md and templates.
 

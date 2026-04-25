@@ -8,9 +8,10 @@
   },
 
   "context": {
-    "_comment": "Compaction triggers. Manual /compact at 60% is preferred — auto is a failsafe only.",
-    "auto_compact_threshold": 0.95,
-    "preferred_compact_threshold": 0.60
+    "compaction_preemptive": 0.38,
+    "degradation_cliff_hard_stop": 0.432,
+    "hard_reset": 0.80,
+    "auto_compact_failsafe": 0.95
   },
 
   "tools": {
