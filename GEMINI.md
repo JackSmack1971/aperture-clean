@@ -33,7 +33,7 @@ Non-negotiable. Violation breaks framework for all users.
 
 Aperture enforces context discipline. This project enforces it on itself.
 
-- Read rule files on path entry. Do not preload all 13 into context.
+- Rely on native path-scoped rule injection; read only when disambiguation required [SOFT GOVERNANCE]
 - Use the WISC protocol for session management (`HANDOVER.md` → `/clear` → fresh read)
 - Apply task-class compaction threshold: SYNTHESIS→40% | DEBUGGING→30% | REFACTOR→35%
   Load the matching MVCS template at session start to confirm the threshold.

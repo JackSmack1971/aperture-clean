@@ -1,19 +1,26 @@
-# Pre-Compact Skill
-<!-- Trigger: Invoke at 38% context saturation before /compact -->
+# Skill: Pre-Compact (WISC Compress)
+<!-- APERTURE-CLEAN Skill | Manual Hook -->
 
-## Quick Reference
-- Threshold: 38% (CLI Cliff: 43.2%)
-- Template: `.claude/templates/COMPACTION.md`
+Use this skill BEFORE executing the `/compact` command to ensure critical architectural decisions and working state are preserved.
 
-## Compaction Template
-```markdown
-### Pre-Compaction Summary
-- **Current Saturation**: [XX]%
-- **Active Files**: [list]
-- **Key Decisions**: [list]
-- **Unfinished Work**: [list]
-- **Blockers**: [list]
+## Operational Workflow
 
-### Command
-/compact preserve: [decisions, active paths, blockers]
-```
+### Step 1: Extraction
+- Read all open TODO items: `grep -rn "\[ \] TODO"`
+- Identify modified files: `git status -s`
+- Confirm current working directory: `pwd`
+
+### Step 2: Snapshot Generation
+Generate a timestamped snapshot in `.claude/snapshots/pre-compact-{timestamp}.md`.
+Include:
+- Summary of current task and blockers.
+- List of modified files from Step 1.
+- Open TODOs extracted.
+
+### Step 3: Compaction Command
+Output the explicit copy-paste command for the user:
+`/compact preserve: [architectural decisions, active file paths, blockers]`
+
+## Success Criteria
+- Snapshot file is persisted to the `snapshots` directory.
+- Context is ready for a clean compression.

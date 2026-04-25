@@ -2,17 +2,49 @@
   "model": "claude-sonnet-4-6",
   "permissions": [
     {
-      "mode": "acceptEdits",
-      "ask": "none",
-      "deny": ["bash:rm -rf *", "bash:sudo *", "write:.env*"]
+      "tool": "Read",
+      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
+      "action": "deny",
+      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
+    },
+    {
+      "tool": "Write",
+      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
+      "action": "deny",
+      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
+    },
+    {
+      "tool": "Edit",
+      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
+      "action": "deny",
+      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
+    },
+    {
+      "tool": "MultiEdit",
+      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
+      "action": "deny",
+      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
+    },
+    {
+      "tool": "Bash",
+      "pattern": "\\bsudo\\b|\\brm\\s+-r[fF]\\s+/",
+      "action": "deny",
+      "message": "Security policy: Destructive system commands blocked (CLAUDE.md Security Invariants)"
     }
   ],
   "tools": {
-    "enabled": ["Read", "Write", "Edit", "MultiEdit", "Bash", "Glob", "Grep"]
+    "enabled": [
+      "Read",
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Bash",
+      "Glob",
+      "Grep"
+    ]
   },
   "hooks": {
-    "pre_compact": ".claude/hooks/pre-compact.sh",
-    "registry": ".claude/hooks/hooks.json"
+    "pre_compact": ".claude/hooks/pre-compact.sh"
   },
   "context_thresholds": {
     "compaction": 0.38,
