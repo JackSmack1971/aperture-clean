@@ -9,6 +9,12 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 > Promote `[Unreleased]` to a version tag when cutting a release.
 > Never delete old version entries. Append only.
 
+## [Unreleased]
+
+### Chore
+- **Documentation**: Deleted stale `ROADMAP.md` (legacy research-heavy vision doc).
+- **Audit**: Completed documentation rot audit; purged all phase-specific roadmaps and stale templates.
+
 ---
 
 ## [3.2.0] — 2026-04-25
