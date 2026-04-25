@@ -1,138 +1,47 @@
-# HANDOVER.md — Session State Artifact
-<!--
-  INSTRUCTIONS FOR AGENT:
-  Fill every section below before executing /clear.
-  Be maximally dense — next session reads ONLY this file to resume.
-  Omit pleasantries. No preamble. Facts and state only.
-  Filesystem is the source of truth. This document is the cognitive bridge.
--->
+<!-- APERTURE-CLEAN HANDOVER v1.0 | 150-token budget ENFORCED | RESTRICTED: prose narrative -->
+<!-- SCHEMA: Core(40-60t) + Context(30-50t) + Episodic(20-30t) + Meta(5-10t) = ≤150 tokens total -->
 
-## Machine State
+## Core State [target: 40–60 tokens]
+```yaml
+intention: ""          # Active goal — 1 imperative sentence
+active_blockers: []    # Unresolved impediments — terse noun phrases only
+decisions_made: []     # Settled choices — verb + rationale ≤10 words each
+```
+
+## Context State [target: 30–50 tokens]
+```yaml
+modified_files: []     # Exact paths only
+git_state: ""          # git rev-parse --short HEAD
+key_deps: []           # Architectural dependencies added this session
+```
+
+## Episodic State [target: 20–30 tokens]
+```yaml
+next_steps:            # Ordered — copy-paste executable imperative verbs
+  - ""
+  - ""
+```
+
+## Metadata [target: 5–10 tokens]
+```yaml
+timestamp: ""          # ISO 8601 UTC
+schema_version: "aperture-clean-v1.0"
+context_pct: ""
+```
+
+---
+<!-- AI-TO-AI PAYLOAD — bounded JSON — required for subagent resume -->
 ```json
 {
-  "session_id": "",
-  "phase": "",
-  "context_pct_at_handoff": "",
+  "goal": "",
+  "blockers": [],
+  "decisions": [],
   "modified_files": [],
-  "active_blockers": 0,
-  "next_step": ""
+  "git_branch": "",
+  "git_hash": "",
+  "next_steps": [],
+  "schema_version": "HO-v1.0",
+  "timestamp": "",
+  "context_saturation_pct": 0
 }
 ```
-<!-- Agent: populate this block first. It is machine-parseable.
-     Pre-compact hook reads modified_files. Resume prompt reads next_step. -->
-
----
-
-## Session Metadata
-- **Date/Time (UTC):** <!-- FILL: e.g. 2026-04-22T14:32:00Z -->
-- **Branch:** <!-- FILL: git branch --show-current -->
-- **Starting commit:** <!-- FILL: git rev-parse --short HEAD at session start -->
-- **Ending commit:** <!-- FILL: git rev-parse --short HEAD now -->
-- **Context saturation at handoff:** <!-- FILL: e.g. ~65% -->
-
----
-
-## Objective
-<!-- FILL: 1–2 sentence statement of what this session was tasked to accomplish -->
-
----
-
-## Completed Work
-<!--
-  FILL: Bulleted list. Each item = one discrete, verifiable outcome.
-  Format: "✅ <what was done> → <file/path affected>"
-  Example: "✅ Refactored auth middleware to use PKCE flow → api/middleware/auth.ts"
--->
-
--
-
----
-
-## Architectural State
-<!--
-  FILL: What does the system look like RIGHT NOW that differs from the start of session?
-  Include: schema changes, new dependencies added, config changes, new files created.
-  Be precise — the next agent must not re-derive this from scratch.
--->
-
-### Modified Files
-```
-<!-- FILL: paste output of: git diff --name-only HEAD@{session-start} -->
-```
-
-### Key Structural Changes
-<!--
-  FILL: Describe changes that are not obvious from file names alone.
-  Example: "AuthService now depends on TokenVault — see src/auth/token-vault.ts"
--->
-
--
-
----
-
-## Decisions Made
-<!--
-  FILL: Architectural or implementation decisions that were evaluated and chosen.
-  Format: "DECISION: <what> → <why chosen> | REJECTED: <alternatives> → <why rejected>"
-  This section prevents the next agent from re-litigating settled decisions.
--->
-
--
-
----
-
-## Deprecated Paths (CRITICAL — prevents repetition)
-<!--
-  FILL: Approaches that were attempted and FAILED or explicitly abandoned.
-  Format: "❌ <approach attempted> → <why it failed/was abandoned>"
-  Example: "❌ Tried using passport.js for OAuth — incompatible with existing session store"
-  The next agent MUST read this before proposing solutions.
--->
-
-> Read FAILURE_LEDGER.md at project root first — it contains all cross-session
-> deprecated paths. Add NEW entries from this session below, then append them
-> to FAILURE_LEDGER.md before executing /clear.
-
--
-
----
-
-## Active Blockers
-<!--
-  FILL: Issues that are unresolved and block forward progress.
-  Format: "🚧 <blocker> | Needs: <what is required to unblock>"
--->
-
--
-
----
-
-## Next Steps (Ordered)
-<!--
-  FILL: Explicit, sequenced tasks for the next session.
-  Each step must be independently executable without re-reading this document.
-  Format: "[ ] <verb> <target> — <constraint or acceptance criterion>"
-  Example: "[ ] Write unit tests for TokenVault.rotate() — must cover expiry edge case"
--->
-
-1. [ ]
-2. [ ]
-3. [ ]
-
----
-
-## Resume Prompt
-<!--
-  FILL: The exact first message to send in the fresh session.
-  Copy-paste ready. Designed for minimal token cost on session init.
--->
-
-```
-Read HANDOVER.md. Resume from "Next Steps". Do not re-explore completed work.
-Active blockers: [paste blocker summary here].
-First task: [paste step 1 here].
-```
-
----
-_Generated by: Claude Code session handoff protocol_
-_Template: .claude/templates/HANDOVER.md_

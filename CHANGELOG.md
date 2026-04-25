@@ -25,6 +25,7 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
 
 ### Fixed
+- **SDO-M-05**: Replaced framework source `HANDOVER.md` template with the 150-token Cognitive Compressor schema.
 - **CWO-A/D/E + SDO-C-03**: Full replacement of runtime `.claude/settings.json` with corrected thresholds (0.80 hard reset), tiered model routing, and db8 cache mitigations.
 - **SDO-H-06**: Updated framework source `settings.json` with corrected context thresholds (0.38/0.432/0.80).
 - **SDO-M-06**: Patched `scripts/ads-lint.sh` to remove `NEVER` from positive anchor count and add `RESTRICTED`/`REQUIRED` directives.
