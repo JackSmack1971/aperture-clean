@@ -1,5 +1,5 @@
 {
-  "schema_version": "aperture-clean-v1.0",
+  "schema_version": "aperture-clean-v3.2.0",
   "model": "claude-sonnet-4-6",
   "model_routing": {
     "haiku": {
@@ -79,7 +79,7 @@
   },
   "system_prompt": {
     "exclude_dynamic_sections": true,
-    "version_tag": "APERTURE-CLEAN v1.0"
+    "version_tag": "APERTURE-CLEAN v3.2.0"
   },
   "db8_mitigations": {
     "idempotent_cleanup": {

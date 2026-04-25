@@ -11,39 +11,38 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [Unreleased]
+## [3.2.0] — 2026-04-25
 
 ### Added
 - **Manual Governance (Path A)**: Implemented structural redundancy architecture to replace automated hook injection.
 - `QUICK-REF.md`: 18-line high-visibility cheat sheet for active session consultation.
 - `IMPLEMENTATION_NOTES.md`: Strategic summary documenting the Path B→A pivot and architecture decisions.
 - `docs/framework/`: Comprehensive validation suite including `PATH_A_VALIDATION.md`, `FRAMEWORK_WALKTHROUGH.md`, and `PROMPT_PATTERN_RETROSPECTIVE.md`.
+- **Tiered Model Routing** (`settings.json`): `model_routing` block — Haiku 4.5 for binary classification/SCOPE extraction, Sonnet 4.6 for multi-file reads/patch generation, Opus 4.6 for security invariant enforcement/ODCV neutralization.
+- **KV-Cache db8 Mitigations** (`settings.json`): Full `cache_epoch_versioning` and `db8_mitigations` blocks — idempotent cleanup, canonical prompt enforcement, 4-tuple epoch key `(prefix_hash, schema_version, cleanup_epoch, tool_state_version)`.
+- **SCOPE Failure Ledger Schema** (`.claude/templates/FAILURE_LEDGER.md`): Semantic grouping schema (SV/TE/CO/CV/SD/RE) with JSON entry format and Haiku 4.5 extraction routing directive.
+- **Compression Law** (`CLAUDE.md`): 80% token floor enforcement for all 13 rule files with baseline line-count table.
+- **Pre-compact Git Snapshot** (`.claude/hooks/pre-compact.sh`): Deterministic snapshot output to `.claude/snapshots/`, `/compact preserve:` directive generation.
 
 ### Changed
-- `CLAUDE.md`: Injected manual domain rule index, failure logging protocol, and op-count context heuristics.
-- `.claude/templates/HANDOVER.md`: Hardened with `FAILURE_LEDGER.md` pattern cross-references.
-- `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
+- `CLAUDE.md`: Injected manual domain rule index, failure logging protocol, and op-count context heuristics. WISC protocol corrected — compaction (38%) and session reset (80%) thresholds separated.
+- `.claude/templates/HANDOVER.md`: Replaced 9-section prose template with compliant 150-token Cognitive Compressor schema (Core/Context/Episodic/Metadata partitions + AI-to-AI JSON trailer).
+- `scripts/framework/.claude/templates/HANDOVER.md`: Synchronized with deployed template — prevents bootstrap regression.
+- `.claude/templates/SUBAGENT.md`: Enforced bounded JSON return contract; eliminated ambiguous `[JSON/Markdown/Summary]` format field.
+- `.claude/templates/COMPACTION.md`: Replaced prose checklist with YAML IF-THEN decision tree per SDO §FORMAT MODALITY ROUTING.
+- `scripts/ads-lint.sh`: Removed `NEVER` from positive anchor count; added `RESTRICTED` and `REQUIRED` as compliant directive patterns.
+- All 13 `.claude/rules/*.md`: Security invariants / HARD STOPS reordered to lines 5–9 (0–15% positional depth) per CWD U-shaped attention placement mandate.
+- `README.md`: Rule file anatomy definition updated — `NEVER` encoding replaced with `RESTRICTED/assert NOT` canonical pattern.
 
 ### Fixed
-- **CWO-F**: Applied Attention Reorder protocol to all 13 rule files, ensuring HARD STOPS occupy the primacy zone (lines 5–9).
-- **CWO-H**: Replaced `FAILURE_LEDGER.md` with the terse SCOPE categorization schema.
-- **SDO-H-05**: Patched `pre-compact.sh` hook to include git state snapshot and preserve-command generation.
-- **CWO-C + SDO-M-02**: Replaced `SUBAGENT.md` with the bounded JSON return contract.
-- **SDO-M-01**: Replaced `COMPACTION.md` with the Pre-Compaction Decision Tree protocol.
-- **SDO-M-03**: Patched `config.md` to eliminate CFV in secret reference convention.
-- **SDO-H-04**: Patched `migrations.md` to eliminate CFV in context engineering notes.
-- **SDO-H-03 + CWO-F**: Patched `api.md` to fix security invariants and reordered for attention primacy.
-- **SDO-H-02 + CWO-F**: Patched `security.md` to fix secrets hygiene invariants and reordered for attention primacy.
-- **SDO-H-01 + CWO-F**: Patched `logging.md` to fix PII scrubbing invariants and reordered for attention primacy.
-- **SDO-M-04**: Patched `README.md` to eliminate CFVs in rule anatomy definitions and architectural diagrams.
-- **SDO-C-01/C-02 + CWO-G**: Patched `CLAUDE.md` to eliminate CFVs, update WISC protocol for corrected thresholds, and add Compression Law + SCOPE routing.
-- **CWO-B + SDO-C-04**: Replaced runtime `.claude/templates/HANDOVER.md` with the 150-token Cognitive Compressor schema.
-- **SDO-M-05**: Replaced framework source `HANDOVER.md` template with the 150-token Cognitive Compressor schema.
-- **CWO-A/D/E + SDO-C-03**: Full replacement of runtime `.claude/settings.json` with corrected thresholds (0.80 hard reset), tiered model routing, and db8 cache mitigations.
-- **SDO-H-06**: Updated framework source `settings.json` with corrected context thresholds (0.38/0.432/0.80).
-- **Documentation Rot Cleanup**: Deleted 21 redundant skill directories in `.claude/skills/`, 6 stale implementation/phase artifacts, and obsolete PR templates.
-- **Setup Guide Synchronization**: Updated `docs/setup.md` to remove vestigial skill references and align with native path-scoped injection engine.
+- **P0 Context Threshold**: `settings.json` `hard_reset` corrected from `0.95` to `0.80`; `cliff_halt: 0.432` added; deprecated `pre_compact` key migrated to `hooksFile` registry.
+- **P0 HANDOVER Fact Destruction**: 60% fact destruction rate eliminated via 150-token schema enforcement.
+- **CFV Elimination**: All 14 `**NEVER**` negative-imperative patterns converted to `RESTRICTED/assert NOT` DSL form across `CLAUDE.md`, 5 rule files, and `README.md`.
 - **Framework Portability**: Resolved hook system incompatibility by implementing redundant manual protocols across CLAUDE.md and templates.
+- `scripts/framework/.claude/settings.json`: `preferred_compact_threshold: 0.60` corrected to `compaction_preemptive: 0.38` / `degradation_cliff_hard_stop: 0.432`.
+- `.claude/hooks/pre-compact.sh`: Non-deterministic `mktemp` replaced with epoch-stamped deterministic path.
+
+## [Unreleased]
 
 ---
 

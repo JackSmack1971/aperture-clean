@@ -1,5 +1,5 @@
 # CLAUDE.md — Context Engineering Law
-<!-- APERTURE-CLEAN v1.0 | CLI optimized -->
+<!-- APERTURE-CLEAN v3.2.0 | CLI optimized -->
 
 REQUIRED: path_scoped_injection_only | assert NOT manual_domain_skill_invocation
 
