@@ -1,5 +1,38 @@
 {
+  "schema_version": "aperture-clean-v1.0",
   "model": "claude-sonnet-4-6",
+  "model_routing": {
+    "haiku": {
+      "model": "claude-haiku-4-5-20251001",
+      "tasks": [
+        "context_saturation_check",
+        "failure_ledger_extraction",
+        "binary_path_classification",
+        "scope_semantic_grouping"
+      ],
+      "rationale": "4-5x faster than Sonnet; mandated for binary classification + SCOPE extraction [VERIFIED: CWD doc]"
+    },
+    "sonnet": {
+      "model": "claude-sonnet-4-6",
+      "tasks": [
+        "domain_rule_file_reads",
+        "multi_file_schema_extraction",
+        "patch_generation",
+        "context_management",
+        "codebase_exploration"
+      ],
+      "rationale": "70% higher token efficiency on codebase exploration [VERIFIED: CWD doc]"
+    },
+    "opus": {
+      "model": "claude-opus-4-6",
+      "tasks": [
+        "security_invariant_enforcement",
+        "architectural_gap_assessment",
+        "odcv_neutralization"
+      ],
+      "rationale": "ASL-3 floor required for ODCV neutralization; architectural reasoning only [VERIFIED: CWD doc]"
+    }
+  },
   "permissions": [
     {
       "tool": "Read",
@@ -33,21 +66,56 @@
     }
   ],
   "tools": {
-    "enabled": [
-      "Read",
-      "Write",
-      "Edit",
-      "MultiEdit",
-      "Bash",
-      "Glob",
-      "Grep"
-    ]
+    "enabled": ["Read", "Write", "Edit", "MultiEdit", "Bash", "Glob", "Grep"]
   },
   "hooks": {
-    "pre_compact": ".claude/hooks/pre-compact.sh"
+    "hooksFile": ".claude/hooks/hooks.json"
   },
   "context_thresholds": {
     "compaction": 0.38,
-    "hard_reset": 0.95
+    "cliff_halt": 0.432,
+    "handover_clear": 0.80,
+    "auto_compact_failsafe": 0.95
+  },
+  "system_prompt": {
+    "exclude_dynamic_sections": true,
+    "version_tag": "APERTURE-CLEAN v1.0"
+  },
+  "db8_mitigations": {
+    "idempotent_cleanup": {
+      "guard": "session_resume_epoch_token",
+      "key": "idempotency_key",
+      "transitions": "monotonic",
+      "assertion": "block_repeated_retention_shrinkage"
+    },
+    "canonical_prompts": {
+      "enforce_deterministic_json_ordering": true,
+      "enforce_fixed_role_sequencing": true,
+      "enforce_normalized_unicode_whitespace": true,
+      "enforce_explicit_system_prompt_versioning": true
+    },
+    "cache_epoch_key_tuple": [
+      "prefix_hash",
+      "schema_version",
+      "cleanup_epoch",
+      "tool_state_version"
+    ],
+    "payload_isolation": {
+      "defer_loading": true
+    }
+  },
+  "cache_epoch_versioning": {
+    "enabled": true,
+    "key_dimensions": [
+      "prefix_hash",
+      "schema_version",
+      "cleanup_epoch",
+      "tool_state_version"
+    ],
+    "idempotency": {
+      "session_epoch_token": true,
+      "monotonic_state_transitions": true
+    },
+    "rationale": "Prevents 100% cache miss on resume via db8 protocol [VERIFIED: CWD doc]"
   }
 }
