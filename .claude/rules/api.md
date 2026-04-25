@@ -1,11 +1,19 @@
 # API Rules — Path-Scoped Context
-<!-- Injected ONLY when agent reads/edits files under /api -->
+<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /api/** -->
 <!-- Static content only. No secrets, no tokens, no env values. Cache-compatible. -->
-<!-- Target: ≤50 lines. Deep detail lives in pointer docs below. -->
+
+<!-- ═══════════════ HARD STOPS — READ FIRST ═══════════════ -->
+<!-- assert NOT read(env_files) — credentials via OS keychain / secret manager ONLY -->
+RESTRICTED: env_file_read | assert NOT read_path MATCHES ".env*"
+  REQUIRED: credential_source IN [os_keychain, secret_manager, placeholder_convention]
+RESTRICTED: auth_body_log | assert NOT log_contains(request_body) WHERE path MATCHES auth_endpoints
+  validation_key: pii_absent_from_logs
+<!-- assert NOT reorder(middleware_chain) — CLAUDE.md Security Invariants §API -->
+<!-- ═══════════════════════════════════════════════════════ -->
 
 ## Auth Middleware
 - Pointer: `docs/auth-flow.md` — full JWT/session lifecycle, token refresh logic, revocation strategy
-- Pointer: `api/middleware/README.md` — middleware chain order (MUST NOT be reordered)
+- Pointer: `api/middleware/README.md` — middleware chain order (REQUIRED: assert NOT reordered)
 - [ ] TODO: Define auth mechanism (JWT / OAuth2 / API Key / mTLS)
 - [ ] TODO: Define token storage contract (httpOnly cookie / Authorization header)
 - [ ] TODO: Define privilege escalation path and RBAC role taxonomy
@@ -22,9 +30,7 @@
 - [ ] TODO: Define pagination contract (cursor / offset — pick ONE, enforce globally)
 - [ ] TODO: OpenAPI spec location: `api/docs/openapi.yaml` — agent must check before adding routes
 
-## Security Invariants
-- **NEVER** read `.env` files — credentials use OS keychain / secret manager placeholders only
-- **NEVER** log request bodies containing auth tokens or PII fields
+## Secrets & Logging
 - [ ] TODO: Define secret placeholder convention: `{{SERVICE_API_KEY}}`
 
 ## Context Engineering Notes
