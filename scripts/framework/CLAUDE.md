@@ -1,75 +1,92 @@
-# CLAUDE.md — Context Engineering Directives
-<!-- ROOT FILE: ≤100 lines. No inline wikis. Pointers only. Static content only. -->
+# CLAUDE.md — Context Engineering Law
+<!-- APERTURE-CLEAN v3.2.0 | CLI optimized -->
 
-## Identity
-You are a stateless, ephemeral compute engine. The filesystem is the source of truth.
-Every token burned here recurs every turn. Maintain relentless signal-to-noise discipline.
-(Audit G-004: Verify 25 required framework files)
+REQUIRED: path_scoped_injection_only | assert NOT manual_domain_skill_invocation
 
-## Tech Stack & Commands
-- Stack: `docs/stack.md` | Test, lint, build commands: `docs/commands.md`
+## WISC Operational Protocol
+- **W**rite: persist progress/decisions to disk every 3–5 turns.
+- **I**solate: delegate heavy reads to subagents via `.claude/templates/SUBAGENT.md`.
+- **S**elect: read targeted line ranges only; RESTRICTED: full-directory ingestion.
+- **C**ompress: `/compact preserve:` at 38% | HANDOVER + `/clear` at 80%.
 
-## Context Budget Law (NON-NEGOTIABLE)
-Every action is a budget decision. Violations compound across every subsequent turn.
+## Context Budget Thresholds
+| Threshold | Action | Outcome |
+|---|---|---|
+| **38.0%** | Manual `/compact` | Stay in Stability Plateau |
+| **43.2%** | **HARD STOP** | Reasoning Cliff (Sigmoid Collapse) |
+| **80.0%** | HANDOVER + `/clear` | Hard Session Reset |
 
-1. Never dump full files — fetch exact function/class/node only
-2. Never paste raw git diffs — use AST/semantic diffs (Tree-sitter / `sem`) only
-3. Never read `.env` files — credentials use OS keychain; placeholders only in context
-4. Respect `.claudeignore` — no ignored paths without explicit user command
-5. Do not re-read summarized files — use the summary; escalate only if precision required
-6. Prefer external verification — run the oracle (diff, wc -l, exit code); intrinsic self-verification degrades on correctness tasks
-7. Evict tool output residue — absorb insight, treat raw output as consumed; tool outputs are ~80% of context bloat
 
-## Repository Mapping Protocol
-Use AST-based ephemeral graph maps for architecture awareness. Never full file dumps.
-Default tool: Aider repo-map / Stacklit (1K–15K tokens). Full file dump = NEVER.
 
-## Prompt Cache Contract
-Static-first ordering: tool schemas → system prompt → static docs → history → current turn.
-Inject `cache_control: ephemeral` every 10–15 blocks. Dynamic metadata → first user message only.
-Use `--exclude-dynamic-system-prompt-sections`. Cache reads cost 0.1x base rate.
+## Domain Rule Index (Manual Load)
+⚠️ **MANDATORY:** Read the corresponding rule file **BEFORE** editing files in these paths. If a task spans multiple domains, read **ALL** applicable rules.
 
-## Compaction Protocol
-**Manual compaction at 38% context saturation. Never wait beyond 43% — empirical research establishes sigmoid collapse at exactly 43.2% with 45.5% reasoning degradation. 38% keeps the model inside the Stability Plateau. Never wait for auto-compaction (95% = catastrophic).**
+| Target Path | Rule File | Primary Constraints |
+|:---|:---|:---|
+| `/api/**` | `api.md` | Auth, rate limits, contracts |
+| `/.github/**`, `/ci/**` | `ci.md` | Pipeline, merge gates, artifacts |
+| `*.yaml`, `/config/**` | `config.md` | Arch, secret references |
+| `/db/**` | `db.md` | Schema, migrations, query safety |
+| `package.json`, `*.lock`| `dependencies.md`| Lockfile law, CVE SLOs |
+| `/docs/**` | `docs.md` | ADR protocol, taxonomy |
+| `/frontend/**` | `frontend.md` | Components, state, rendering |
+| `/infra/**` | `infra.md` | IaC, secrets, blast radius |
+| `/logging/**` | `logging.md` | PII scrubbing, JSON schema |
+| `/migrations/**` | `migrations.md` | Additive-only, zero-downtime |
+| `/monitoring/**` | `monitoring.md` | SLOs, alert standards |
+| `/security/**` | `security.md` | SAST, CVE response, crypto |
+| `/tests/**`, `*.spec.*`| `testing.md` | Runner config, coverage, fixtures |
 
-`/compact preserve: [architectural decisions, schema changes, active file paths]`
+## Manual Failure Logging
+After any tool error, permission denial, or user correction, you **MUST** record the failure in `FAILURE_LEDGER.md` immediately.
+- **Trigger:** Any non-zero exit code or `settings.json` block.
+- **Workflow:** `Read(FAILURE_LEDGER.md)` (check for duplicates) → `Write(append new entry)`.
 
-Hard reset (State Freeze): Use `/state-freeze` protocol (`.claude/templates/STATE-FREEZE.md`) to extract failure patterns → `HANDOVER.md` → `/clear` → reinitialize with minimal pristine state. Use when loops detected or cliff is approaching.
-**State Freeze (context has accumulated dead weight):** Use when >3 abandoned paths are in context or domain switching is required. Protocol: `.claude/templates/STATE-FREEZE.md` | Workflow: `/state-freeze`
+**Extraction Routing:** Route all SCOPE failure extraction calls to `claude-haiku-4-5-20251001`.
+Haiku executes semantic grouping 4–5× faster than Sonnet with 94.8% SCOPE category accuracy [VERIFIED: CWD doc].
 
-Task-specific context templates: `.claude/templates/MVCS-SYNTHESIS.md` | `.claude/templates/MVCS-DEBUGGING.md` | `.claude/templates/MVCS-REFACTOR.md`
+**SCOPE Categories:** SV (Security Violation) | TE (Tool Error) | CO (Context Overflow) |
+CV (Constraint Violation) | SD (Schema Divergence) | RE (Routing Error)
 
-## Multi-Agent Rules (Flat Orchestration)
-- **Subagent (default for heavy reads):** Spawn for grep/glob across >10 files. Returns compressed summary ONLY.
-- **Agent Teams (parallelized work only):** 4 agents = 4x token burn. Reserve for competing hypotheses or multi-lens reviews.
-- Orchestrator context = architectural decisions only. Treat it as precious VRAM.
+## Context & Attention Discipline
+Manual monitoring is required as `/tokens` and hooks are unavailable.
+- **Snapshot (50 ops):** Write current decisions to `DECISIONS.md`.
+- **Handover (80 ops):** Generate `HANDOVER.md` and request session reset.
+- **Hard Enforcement:** State current operation count in every `Write` tool description (e.g., `[Op 42/80] Updating routes`).
 
-## XML Prompt Structure
-All non-trivial interventions use: `<role>` → `<context>` → `<documents>` → `<instructions>` → `<examples>` → `<output_format>`
-Enforce strict output format locks: "Return ONLY [format]. No explanation. No preamble."
+## Compression Law
+<!-- assert NOT compress(rule_files) BELOW 80pct_original_token_count -->
 
-## Path-Scoped Rules
-<!-- Directive: Read .claude/rules/ on path entry only (Audit G-001) -->
-- `/db` → `.claude/rules/db.md` | `/migrations/**` → `.claude/rules/migrations.md`
-- `/api` → `.claude/rules/api.md` | `/frontend` → `.claude/rules/frontend.md`
-- `/infra` → `.claude/rules/infra.md` | `/security/**`, `*.sarif` → `.claude/rules/security.md`
-- `/monitoring/**`, `*.dashboard.json` → `.claude/rules/monitoring.md`
-- `/config/**`, `*.yaml`, `*.toml` → `.claude/rules/config.md`
-- `package.json`, `*.lock`, `requirements.txt`, `go.mod` → `.claude/rules/dependencies.md`
-- `*.test.*`, `*.spec.*`, `/tests/**` → `.claude/rules/testing.md`
-- Logging/telemetry files → `.claude/rules/logging.md`
-- `/.github/**`, `/.gitlab-ci.yml`, `/ci/**` → `.claude/rules/ci.md`
-- `/docs/**`, `*.md` (non-root) → `.claude/rules/docs.md`
-- Global pointers → `docs/architecture.md`, `docs/auth-flow.md`, `docs/api-contracts.md`
+RESTRICTED: rule_file_compression | assert NOT token_count(rule_file) < 0.80 * baseline_token_count
 
-## Session Hygiene Checklist
-- [ ] `.claudeignore` covers: `logs/`, `dist/`, `build/`, `node_modules/`, `uploads/`, `*.lock`, `*.bin`
-- [ ] No MCP servers loaded beyond what this task requires (each schema = startup token cost)
-- [ ] `--bare` flag used for scripted/headless API calls
-- [ ] Extended thinking `budget_tokens` ceiling set (unconstrained = runaway output cost)
-- [ ] `HANDOVER.md` generated before any hard `/clear`
-- [ ] Complete all work in current domain before switching paths — domain bouncing fires a new rule injection and invalidates the prefix cache
+Rationale: Naive syntactic stripping achieves 17% input token reduction but triggers 67% total
+session cost escalation due to LLM decompression overhead. Compressing beyond the 10–20% ratio
+floor strips syntactic anchors, causing catastrophic constraint violations [VERIFIED: CWD doc].
 
-## WISC Framework
-**Write** progress → **Isolate** heavy tasks to subagents → **Select** via layered repo-map → **Compress** via hard clear + handoff.
-Templates: `.claude/templates/HANDOVER.md` | `.claude/templates/COMPACTION.md`
+**Baseline token counts (v1.0 — 80% floor enforcement):**
+
+| Rule File        | Baseline Lines | 80% Floor (lines) |
+|:-----------------|---------------:|------------------:|
+| api.md           | 37             | 30                |
+| ci.md            | 52             | 42                |
+| config.md        | 46             | 37                |
+| db.md            | 33             | 27                |
+| dependencies.md  | 38             | 31                |
+| docs.md          | 45             | 36                |
+| frontend.md      | 36             | 29                |
+| infra.md         | 38             | 31                |
+| logging.md       | 48             | 39                |
+| migrations.md    | 41             | 33                |
+| monitoring.md    | 45             | 36                |
+| security.md      | 49             | 40                |
+| testing.md       | 45             | 36                |
+
+If compression is required, re-validate all RESTRICTED invariants survive intact before committing.
+
+## Operational Skills
+- `QUICK-REF.md` → Active session cheat sheet (Read frequently)
+- `HANDOVER.md` → Session state persistence
+- `SUBAGENT.md` → Task delegation briefing (Includes logging/context reminders)
+- `FAILURE_LEDGER.md` → Record of failed approaches
+
+> See `.claude/settings.json` for machine-enforced rules.

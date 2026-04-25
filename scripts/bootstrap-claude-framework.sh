@@ -142,7 +142,7 @@ $DRY_RUN && warn "DRY-RUN mode — no files will be written"
 # PHASE 2: FILE INSTALLATION
 # ─────────────────────────────────────────────────────────────────────────────
 
-header "Phase 2 — File Installation (25 files)"
+header "Phase 2 — File Installation (26 files)"
 
 # install_file <src_relative_to_framework> <dest_relative_to_project_root>
 install_file() {
@@ -183,6 +183,7 @@ install_file ".claude/settings.json"
 
 # Hooks
 install_file ".claude/hooks/pre-compact.sh"
+install_file ".claude/hooks/hooks.json"
 
 # Templates
 install_file ".claude/templates/HANDOVER.md"
@@ -290,13 +291,14 @@ fi
 # PHASE 6: INTEGRITY CHECK
 # ─────────────────────────────────────────────────────────────────────────────
 
-header "Phase 6 — Post-Install Integrity Check (25 files)"
+header "Phase 6 — Post-Install Integrity Check (26 files)"
 
 EXPECTED_FILES=(
   "CLAUDE.md"
   ".claudeignore"
   ".claude/settings.json"
   ".claude/hooks/pre-compact.sh"
+  ".claude/hooks/hooks.json"
   ".claude/templates/HANDOVER.md"
   ".claude/templates/SUBAGENT.md"
   ".claude/templates/COMPACTION.md"

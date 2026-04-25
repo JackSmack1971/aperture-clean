@@ -1,48 +1,21 @@
-﻿# FAILURE_LEDGER.md â€” Persistent Cross-Session Failure Record
-<!--
-  PURPOSE: Record approaches that were attempted and failed â€” permanently.
-  This file lives at the PROJECT ROOT and accumulates across all sessions.
-  It is NEVER cleared. It is NEVER summarized away.
-  Every future agent reads this before proposing solutions.
+# FAILURE_LEDGER — Pareto-Curated Record
+<!-- APERTURE-CLEAN v1.0 | RESTRICTED: narrative prose -->
 
-  APPEND ONLY. Never delete entries.
-  Format: [YYYY-MM-DD] [domain] [approach] â†’ [why it failed]
--->
+## Systemic Failures (SCOPE Categorization)
+<!-- SV (Security) | TE (Tool) | CO (Context) | CV (Constraint) | SD (Schema) | RE (Routing) -->
 
-## Usage
-- Initialize this file at project root on first session: cp .claude/templates/FAILURE_LEDGER.md FAILURE_LEDGER.md
-- Append one line per failed approach BEFORE abandoning it
-- Reference from HANDOVER.md: "New deprecated paths this session â€” see FAILURE_LEDGER.md"
-- Agent reads this at session start: "Read FAILURE_LEDGER.md before proposing any solution"
+| Timestamp | Type | Pattern | Branch | Severity |
+|:----------|:-----|:--------|:-------|:---------|
+| [ISO-UTC] | [TYP]| [Tersely extracted failure signature] | [branch] | MAJOR |
 
-## Append Format
+---
+## Root Cause Decoders
+<!-- Map extracted patterns to permanent fixes here -->
+1. **CV: NEVER_pattern** → migrate to RESTRICTED/assert_NOT DSL.
+2. **TE: exit_code_1** → check for uninitialized env vars.
+3. **CO: reasoning_cliff** → execute STATE_FREEZE protocol.
 
-[YYYY-MM-DD] [tag] [domain] [approach attempted] â†’ [exact reason it failed / conflict encountered]
-
-## Pareto Curation Protocol
-**The Pareto boundary:** ~80% of agent failures stem from ~20% of root causes.
-The optimal ledger contains 10â€“20 high-fidelity SYSTEMIC entries.
-Beyond this boundary, additional entries dilute signal without reducing uncertainty.
-
-Tag every entry at append time:
-- `[SYSTEMIC]` â€” recurs across sessions or domains; represents a root-cause pattern
-- `[TRANSIENT]` â€” single occurrence; environment-specific anomaly
-
-**Pareto rules:**
-- SYSTEMIC entries: **NEVER DELETE.** They represent structural knowledge.
-- TRANSIENT entries: Review quarterly. Prune if the environment has changed.
-- Entries >90 days old against a dependency that has since updated:
-  supersede with a new entry rather than deleting. Format:
-  `[YYYY-MM-DD] [domain] SUPERSEDES [original-date]: [new finding]`
-
-**Pareto Boundary Warning:** If ledger exceeds 20 entries, audit TRANSIENT tags
-before adding new entries. Ledger bloat degrades retrieval signal.
-
-## Example Entries
-
-[2026-04-22] [SYSTEMIC] auth      JWT with httpOnly cookies â†’ incompatible with existing SPA routing; CORS preflight failures on refresh
-[2026-04-22] [TRANSIENT] db       Prisma migrate deploy in CI â†’ schema drift on staging; requires prisma migrate reset first
-[2026-04-22] [SYSTEMIC] frontend  Zustand global store for form state â†’ re-render cascade on large forms; reverted to local useState
-
-## Active Ledger
-<!-- ENTRIES BEGIN BELOW THIS LINE â€” newest at bottom -->
+## Protocol for Entry
+1. Read existing ledger BEFORE adding new entries (assert NOT duplicate).
+2. Use Haiku 4.5 for extraction routing to maintain low token latency.
+3. Keep patterns <100 characters; focus on the error code/exception name.

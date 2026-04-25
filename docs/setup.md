@@ -1,25 +1,18 @@
 # Aperture Setup Guide
-<!-- APERTURE-CLEAN v1.0 | Setup -->
+<!-- APERTURE-CLEAN v3.2.0 | Setup -->
 
 This guide covers the prerequisites, configuration, and verification of your Aperture context engineering environment.
 
 ## 1. Prerequisites
 Before installing, ensure your environment has the following tools:
 - **Git**: For repository tracking and status extraction.
-- **jq**: For JSON configuration validation.
-- **Python 3**: For state extraction and advanced scripting.
-
-Verify with:
-```bash
-git --version
-jq --version
-python3 --version
-```
+- **Bash 4.0+**: Required for bootstrap and hook scripts.
+- **jq**: Optional, but recommended for JSON validation.
 
 ## 2. Installation
-The framework is pre-scaffolded in `.claude/`. To verify the installation, run the pre-flight check:
+The framework is deployed via the idempotent bootstrap script. To verify the installation state without making changes, run:
 ```bash
-bash preflight.sh
+bash scripts/bootstrap-claude-framework.sh --dry-run
 ```
 
 ## 3. Configuration

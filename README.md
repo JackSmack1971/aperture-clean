@@ -11,7 +11,7 @@
 Inject only what the agent needs. Exactly when it needs it. Never at startup.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Framework Files](https://img.shields.io/badge/framework_files-25-blue)](#framework-architecture)
+[![Framework Files](https://img.shields.io/badge/framework_files-26-blue)](#framework-architecture)
 [![Domain Rules](https://img.shields.io/badge/domain_rules-13-green)](#domain-rules)
 [![Bootstrap](https://img.shields.io/badge/install-one_command-brightgreen)](#quick-start)
 
@@ -57,7 +57,7 @@ The result: a lean startup payload, domain-specific governance that appears exac
 > **IV. Rules activate on path entry. They never load globally.**  
 > A domain rule that loads at startup is a tax on every operation, most of which have nothing to do with that domain.
 
-> **V. Manual compaction at 38%. Never wait for auto-compaction at 95%.**  
+> **V. Manual compaction at 38%. RESTRICTED: auto-compaction at 95%.**  
 > At 38% saturation, the model remains in the Stability Plateau. Research establishes a sigmoid collapse at exactly 43.2% saturation. Compact early, compact deliberately.
 
 > **VI. Tiered routing maximizes the reasoning-to-cost ratio.**  
@@ -139,11 +139,11 @@ That's it. The bootstrap script runs 6 phases automatically:
 | Phase | Action |
 |---|---|
 | 1 — Validation | Bash 4+, git repo, required tools |
-| 2 — Installation | All 25 framework files |
+| 2 — Installation | All 26 framework files |
 | 3 — Permissions | `chmod +x` on hook scripts |
 | 4 — `.gitignore` | Adds `settings.local.json`, `snapshots/` |
 | 5 — Tracking | Verifies `.claudeignore` is git-committed |
-| 6 — Integrity | Confirms all 25 files present |
+| 6 — Integrity | Confirms all 26 files present |
 
 **After install**, complete your project-specific configuration:
 
@@ -219,7 +219,7 @@ project-root/
 └── scripts/
     ├── bootstrap-claude-framework.sh   # Idempotent installer: 6-phase validation,
     │                                   # file install, permissions, .gitignore patch,
-    │                                   # git tracking check, integrity verification
+    │                                   # git tracking check, integrity verification (26 files)
     └── framework/                      # Versioned source copy of all framework files.
                                         # Update framework by pulling here, then re-run
                                         # bootstrap --force.
@@ -294,7 +294,7 @@ Execute scoped task
 
 ## Domain Rules Reference
 
-Each rule file follows a strict schema: injection trigger, section headers, `[ ] TODO:` placeholder items for human completion, `**NEVER**` hard-stop security invariants, `## Context Engineering Notes` with agent-specific token-saving directives, and a `## Populated By` footer.
+Each rule file follows a strict schema: injection trigger, section headers, `[ ] TODO:` placeholder items for human completion, `RESTRICTED` hard-stop security invariants, `## Context Engineering Notes` with agent-specific token-saving directives, and a `## Populated By` footer.
 
 | Rule File | Injection Trigger | Primary Token Threat Blocked |
 |---|---|---|
@@ -436,23 +436,22 @@ The agent can still be explicitly directed to read any ignored file. `.claudeign
 
 ```json
 {
-  "model": { "default": "claude-sonnet-4-6" },
-  "tools": {
-    "allowed": ["bash", "read", "write", "edit", "glob", "grep"]
-  },
-  "extended_thinking": {
-    "budget_tokens": 10000,
-    "effort": "medium"
+  "schema_version": "aperture-clean-v3.2.0",
+  "model_routing": {
+    "haiku": { "model": "claude-haiku-4-5-...", "tasks": ["log_extraction", "classification"] },
+    "sonnet": { "model": "claude-sonnet-4-6", "tasks": ["implementation", "multi_file_reads"] }
   },
   "hooks": {
-    "pre_compact": ".claude/hooks/pre-compact.sh"
+    "hooksFile": ".claude/hooks/hooks.json"
   },
-  "permissions": {
-    "deny": ["bash:rm -rf *", "bash:sudo *", "write:.env*"]
+  "context_thresholds": {
+    "compaction": 0.38,
+    "cliff_halt": 0.432,
+    "handover_clear": 0.80
   },
-  "system_prompt": {
-    "exclude_dynamic_sections": true
-  }
+  "permissions": [
+    { "tool": "Bash", "pattern": "\\bsudo\\b", "action": "deny" }
+  ]
 }
 ```
 
