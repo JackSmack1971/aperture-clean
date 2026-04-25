@@ -1,7 +1,13 @@
 # Logging Rules — Path-Scoped Context
-<!-- Injected ONLY when agent reads/edits files touching logging, observability, or telemetry -->
-<!-- CRITICAL: PII and credential scrubbing invariants live here. Cache-compatible. -->
-<!-- Target: ≤50 lines. Deep detail lives in pointer docs below. -->
+<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits logging/observability files -->
+<!-- Static content only. Cache-compatible. Target: ≤50 lines. -->
+
+<!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+RESTRICTED: log_pii | assert NOT log_field IN [passwords, tokens, api_keys, session_ids, raw_auth_headers]
+RESTRICTED: log_financial_id | assert NOT log_field IN [credit_card_full, ssn, government_id]
+RESTRICTED: log_auth_body | assert NOT log_source == auth_endpoint_raw_body
+validation_key: pii_absent
+<!-- ══════════════════════════════════════════════════════════ -->
 
 ## Log Level Taxonomy
 - Pointer: `docs/observability.md` — alerting thresholds, SLO targets, dashboard locations
@@ -24,10 +30,7 @@
 - [ ] TODO: Dynamic data goes in structured `context` / `fields` object — never in `message`
 - [ ] TODO: Define log schema location: `docs/log-schema.json`
 
-## PII Scrubbing Invariants (HARD STOPS — non-negotiable)
-- **NEVER** log: passwords, tokens, API keys, session IDs, raw auth headers
-- **NEVER** log: full credit card numbers, SSNs, government IDs
-- **NEVER** log: raw request bodies from auth endpoints
+## PII Policy
 - [ ] TODO: Define PII field allowlist (fields permitted in logs): `docs/pii-policy.md`
 - [ ] TODO: Define scrubber middleware location and test coverage requirement (100% on scrubber)
 - [ ] TODO: Define masking pattern for partial values: `user_email: "j***@example.com"`
