@@ -86,7 +86,7 @@ Agent navigates to /api/routes/auth.ts
 │  .claude/rules/api.md INJECTED                  │
 │  Auth middleware rules                          │
 │  Rate limiting contracts                        │
-│  Security invariants (NEVER log PII)            │
+│  Security invariants (RESTRICTED log PII)      │
 │  Context engineering notes for this domain      │
 └─────────────────────────────────────────────────┘
      │
@@ -317,7 +317,8 @@ Each rule file follows a strict schema: injection trigger, section headers, `[ ]
 ## [Section]
 - Pointer: `path/to/deep-doc.md` — description
 - [ ] TODO: Human-completion placeholder
-- **NEVER** Hard-stop security invariant
+- RESTRICTED: <prohibited_action> | assert NOT <prohibited_action_invoked>
+  validation_key: <compliance_assertion>
 
 ## Context Engineering Notes
 - Agent-specific token-saving directives for this domain

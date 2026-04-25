@@ -25,6 +25,7 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
 
 ### Fixed
+- **SDO-M-04**: Patched `README.md` to eliminate CFVs in rule anatomy definitions and architectural diagrams.
 - **SDO-C-01/C-02 + CWO-G**: Patched `CLAUDE.md` to eliminate CFVs, update WISC protocol for corrected thresholds, and add Compression Law + SCOPE routing.
 - **CWO-B + SDO-C-04**: Replaced runtime `.claude/templates/HANDOVER.md` with the 150-token Cognitive Compressor schema.
 - **SDO-M-05**: Replaced framework source `HANDOVER.md` template with the 150-token Cognitive Compressor schema.
