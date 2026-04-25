@@ -12,6 +12,21 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ---
 
 ## [Unreleased]
+
+### Added
+- **Manual Governance (Path A)**: Implemented structural redundancy architecture to replace automated hook injection.
+- `QUICK-REF.md`: 18-line high-visibility cheat sheet for active session consultation.
+- `IMPLEMENTATION_NOTES.md`: Strategic summary documenting the Path B→A pivot and architecture decisions.
+- `docs/framework/`: Comprehensive validation suite including `PATH_A_VALIDATION.md`, `FRAMEWORK_WALKTHROUGH.md`, and `PROMPT_PATTERN_RETROSPECTIVE.md`.
+
+### Changed
+- `CLAUDE.md`: Injected manual domain rule index, failure logging protocol, and op-count context heuristics.
+- `.claude/templates/HANDOVER.md`: Hardened with `FAILURE_LEDGER.md` pattern cross-references.
+- `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
+
+### Fixed
+- **Framework Portability**: Resolved hook system incompatibility by implementing redundant manual protocols across CLAUDE.md and templates.
+
 ---
 
 ## [3.1.0] — 2026-04-23
