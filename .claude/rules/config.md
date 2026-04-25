@@ -22,7 +22,8 @@
 - Secrets in config files use placeholder syntax ONLY: `{{SECRET_NAME}}`
 - Runtime injection handled by: <!-- TODO: define (Vault agent / AWS SSM / Doppler / envsubst) -->
 - [ ] TODO: Document all secret placeholder keys in `docs/secrets-inventory.md`
-- **NEVER** read config files that contain resolved secret values into context
+- RESTRICTED: resolved_secret_in_context | assert NOT context_contains_resolved_secret_value
+  validation_key: placeholder_pattern_only | expected: "{{SECRET_NAME}}"
 
 ## Feature Flags
 - [ ] TODO: Define feature flag system (LaunchDarkly / Unleash / config-based / env var)
