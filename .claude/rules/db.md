@@ -1,7 +1,13 @@
 # DB Rules — Path-Scoped Context
-<!-- Injected ONLY when agent reads/edits files under /db -->
-<!-- Static content only. No dynamic values. Cache-compatible. -->
-<!-- Target: ≤50 lines. Deep detail lives in pointer docs below. -->
+<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /db/** -->
+<!-- Static content only. Cache-compatible. Target: ≤50 lines. -->
+
+<!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+RESTRICTED: destructive_migration | assert NOT git_stage_contains(DROP COLUMN|TABLE)
+  REQUIRED: additive_only_first_phase | justification: zero_downtime
+RESTRICTED: raw_sql_interpolation | assert NOT sql_query_contains("${")
+  REQUIRED: parameterized_queries_only
+<!-- ══════════════════════════════════════════════════════════ -->
 
 ## Schema Constraints
 - Pointer: `db/docs/schema.md` — canonical table definitions, column types, nullability contracts
@@ -13,13 +19,11 @@
 ## Migration Rules
 - Pointer: `db/docs/migration-runbook.md` — rollback procedure, zero-downtime protocol
 - [ ] TODO: Define migration tool (Flyway / Liquibase / Alembic / custom)
-- [ ] TODO: Enforce: migrations are ADDITIVE only — no destructive column drops in a single step
 - [ ] TODO: Define naming convention: `YYYYMMDDHHMMSS_<verb>_<table>.sql`
 - [ ] TODO: Confirm: all migrations must include a compensating `down` migration
 
 ## Query Safety
 - [ ] TODO: Define ORM / query builder (raw SQL / SQLAlchemy / Prisma / Drizzle)
-- [ ] TODO: Parameterized queries ONLY — no string interpolation into SQL
 - [ ] TODO: Define max query result size / pagination contract
 - [ ] TODO: Define transaction isolation level standard
 

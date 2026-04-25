@@ -1,7 +1,13 @@
 # CI Rules — Path-Scoped Context
-<!-- Injected ONLY when agent reads/edits files under /.github, /.gitlab, /ci, or pipeline configs -->
-<!-- Static content only. No secrets, runner tokens, or env values. Cache-compatible. -->
-<!-- Target: ≤50 lines. Deep detail lives in pointer docs below. -->
+<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /.github or /ci files -->
+<!-- Static content only. Cache-compatible. Target: ≤55 lines. -->
+
+<!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+RESTRICTED: pipeline_secret | assert NOT yaml_contains_raw_secret
+  REQUIRED: platform_secret_reference_only | expected: "${{ secrets.NAME }}"
+RESTRICTED: status_check_bypass | assert NOT git_stage_contains(continue_on_error: true)
+  target: [security, tests, build]
+<!-- ══════════════════════════════════════════════════════════ -->
 
 ## Pipeline Architecture
 - Pointer: `ci/docs/pipeline-map.md` — stage DAG, job dependencies, trigger conditions
@@ -17,20 +23,14 @@
   - [ ] Integration tests
   - [ ] Security scan (SAST / dependency audit)
   - [ ] Build artifact validation
-  - [ ] [ Add project-specific checks here ]
 - [ ] TODO: Define test parallelization strategy (matrix / shard count)
-- [ ] TODO: Enforce: no `continue-on-error: true` on security or test jobs
 
 ## Artifact Management
 - [ ] TODO: Define artifact output paths and naming convention
-- [ ] TODO: Define artifact retention policy per environment:
-  - `dev`: ___ days
-  - `staging`: ___ days
-  - `prod`: ___ days (or indefinite with offload to cold storage)
+- [ ] TODO: Define artifact retention policy per environment
 - [ ] TODO: Define artifact signing / attestation requirement (SLSA level target)
 
-## Secret Injection
-- **NEVER** hardcode secrets in pipeline YAML — use platform secret store references only
+## Secret Policy
 - [ ] TODO: Define secret reference syntax: `${{ secrets.NAME }}` / `$SECRET_NAME`
 - [ ] TODO: Define secret rotation trigger: rotation must auto-invalidate cached pipeline runs
 - [ ] TODO: Enforce: secrets masked in all log output (platform setting — verify it is ON)
@@ -38,7 +38,7 @@
 ## Failure Triage Protocol
 - [ ] TODO: Define flaky test policy: tag `@flaky`, quarantine to non-blocking suite within 24h
 - [ ] TODO: Define pipeline failure notification target (Slack channel / PagerDuty / email)
-- [ ] TODO: Define max pipeline duration SLO: ___ minutes before alert
+- [ ] TODO: Define max pipeline duration SLO
 
 ## Context Engineering Notes
 - Do NOT read full CI run logs into context — they are in `.claudeignore`

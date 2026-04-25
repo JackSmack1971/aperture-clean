@@ -1,33 +1,37 @@
 # Frontend Rules — Path-Scoped Context
-<!-- Injected ONLY when agent reads/edits files under /frontend -->
-<!-- Static content only. No runtime values. Cache-compatible. -->
-<!-- Target: ≤50 lines. Deep detail lives in pointer docs below. -->
+<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /frontend/** -->
+<!-- Static content only. Cache-compatible. Target: ≤50 lines. -->
+
+<!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+RESTRICTED: inline_styling | assert NOT git_stage_contains(style={{)
+  REQUIRED: design_token_classes | source: frontend/docs/design-tokens.md
+RESTRICTED: prop_drilling | assert NOT prop_depth > 3
+  REQUIRED: shared_state_refactor | target: [Zustand, Redux, Context]
+<!-- ══════════════════════════════════════════════════════════ -->
 
 ## Component Conventions
-- Pointer: `frontend/docs/component-library.md` — approved component inventory, usage contracts
-- Pointer: `frontend/docs/design-tokens.md` — color, spacing, typography scale (source of truth)
+- Pointer: `frontend/docs/component-library.md` — approved component inventory
+- Pointer: `frontend/docs/design-tokens.md` — color, spacing, typography scale
 - [ ] TODO: Define component framework (React / Vue / Svelte / Web Components)
-- [ ] TODO: Define naming convention (PascalCase files / kebab-case CSS / co-located test files)
-- [ ] TODO: Define barrel export policy (`index.ts` per feature folder — YES/NO)
-- [ ] TODO: Define prop contract: required props explicit, optional props defaulted at definition
+- [ ] TODO: Define naming convention (PascalCase files / kebab-case CSS)
+- [ ] TODO: Define barrel export policy
 
 ## Styling
-- [ ] TODO: Define styling system (Tailwind / CSS Modules / styled-components / vanilla CSS)
-- [ ] TODO: Enforce: NO inline `style={{}}` attributes — use design token classes only
-- [ ] TODO: Define responsive breakpoint names and pixel values (document in design-tokens.md)
-- [ ] TODO: Define dark mode strategy (CSS variables / class toggle / media query)
+- [ ] TODO: Define styling system (Tailwind / CSS Modules / styled-components)
+- [ ] TODO: Define responsive breakpoint names and pixel values
+- [ ] TODO: Define dark mode strategy
 
 ## State Management
-- [ ] TODO: Define state layers: local (useState) / shared (Zustand / Redux) / server (React Query / SWR)
-- [ ] TODO: Define forbidden patterns (prop drilling beyond 2 levels → lift to shared store)
+- [ ] TODO: Define state layers: local / shared / server
+- [ ] TODO: Define shared state store location
 
 ## Rendering & Performance
 - [ ] TODO: Define SSR/SSG/CSR split per route type
-- [ ] TODO: Enforce: no `useEffect` for derived state — use `useMemo` / computed values
-- [ ] TODO: Define bundle split strategy: route-level lazy loading minimum
+- [ ] TODO: Enforce: no `useEffect` for derived state
+- [ ] TODO: Define bundle split strategy
 
 ## Context Engineering Notes
-- Do NOT dump full component files to fix a prop type — read the interface/type block only
+- Do NOT dump full component files — read the interface/type block only
 - Do NOT ingest full Tailwind config — query specific token value via grep
 - Large component trees → subagent reads and returns affected node list only
 

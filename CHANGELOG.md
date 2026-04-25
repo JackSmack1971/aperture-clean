@@ -25,6 +25,7 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
 
 ### Fixed
+- **CWO-F**: Applied Attention Reorder protocol to all 13 rule files, ensuring HARD STOPS occupy the primacy zone (lines 5–9).
 - **CWO-H**: Replaced `FAILURE_LEDGER.md` with the terse SCOPE categorization schema.
 - **SDO-H-05**: Patched `pre-compact.sh` hook to include git state snapshot and preserve-command generation.
 - **CWO-C + SDO-M-02**: Replaced `SUBAGENT.md` with the bounded JSON return contract.
