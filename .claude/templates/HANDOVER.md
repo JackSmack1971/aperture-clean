@@ -12,7 +12,10 @@
 [single, clear action for resuming agent]
 
 ## Blockers
-[any impediments or questions]
+- [any impediments or questions]
+
+## Deprecated Paths (FAILURE_LEDGER.md)
+- [reference critical failure patterns from the ledger to prevent re-attempts]
 
 ## Machine State (JSON)
 ```json

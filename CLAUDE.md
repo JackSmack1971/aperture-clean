@@ -18,36 +18,40 @@
 
 
 
+## Domain Rule Index (Manual Load)
+⚠️ **MANDATORY:** Read the corresponding rule file **BEFORE** editing files in these paths. If a task spans multiple domains, read **ALL** applicable rules.
+
+| Target Path | Rule File | Primary Constraints |
+|:---|:---|:---|
+| `/api/**` | `api.md` | Auth, rate limits, contracts |
+| `/.github/**`, `/ci/**` | `ci.md` | Pipeline, merge gates, artifacts |
+| `*.yaml`, `/config/**` | `config.md` | Arch, secret references |
+| `/db/**` | `db.md` | Schema, migrations, query safety |
+| `package.json`, `*.lock`| `dependencies.md`| Lockfile law, CVE SLOs |
+| `/docs/**` | `docs.md` | ADR protocol, taxonomy |
+| `/frontend/**` | `frontend.md` | Components, state, rendering |
+| `/infra/**` | `infra.md` | IaC, secrets, blast radius |
+| `/logging/**` | `logging.md` | PII scrubbing, JSON schema |
+| `/migrations/**` | `migrations.md` | Additive-only, zero-downtime |
+| `/monitoring/**` | `monitoring.md` | SLOs, alert standards |
+| `/security/**` | `security.md` | SAST, CVE response, crypto |
+| `/tests/**`, `*.spec.*`| `testing.md` | Runner config, coverage, fixtures |
+
+## Manual Failure Logging
+After any tool error, permission denial, or user correction, you **MUST** record the failure in `FAILURE_LEDGER.md` immediately.
+- **Trigger:** Any non-zero exit code or `settings.json` block.
+- **Workflow:** `Read(FAILURE_LEDGER.md)` (check for duplicates) → `Write(append new entry)`.
+
+## Context & Attention Discipline
+Manual monitoring is required as `/tokens` and hooks are unavailable.
+- **Snapshot (50 ops):** Write current decisions to `DECISIONS.md`.
+- **Handover (80 ops):** Generate `HANDOVER.md` and request session reset.
+- **Hard Enforcement:** State current operation count in every `Write` tool description (e.g., `[Op 42/80] Updating routes`).
+
 ## Operational Skills
+- `QUICK-REF.md` → Active session cheat sheet (Read frequently)
 - `HANDOVER.md` → Session state persistence
-- `SUBAGENT.md` → Task delegation briefing
-- `COMPACTION.md` → Pre-compaction checklist
-- `FAILURE_LEDGER.md` → Pareto-curated failure patterns
+- `SUBAGENT.md` → Task delegation briefing (Includes logging/context reminders)
+- `FAILURE_LEDGER.md` → Record of failed approaches
 
-## Compaction & State Freeze
-1. **Compaction (38%)**: Extract decisions/blockers → `/compact preserve: [items]`.
-2. **State Freeze (CLI Cliff)**: Use `/state-freeze` workflow → `.claude/templates/STATE-FREEZE.md`.
-3. **Reset**: Generate `HANDOVER.md` → `/clear` → re-read handoff.
-
-## Session Hygiene Checklist
-- [ ] `.claudeignore` verified active
-- [ ] No MCP servers beyond active scope
-- [ ] Extended thinking budget capped
-- [ ] Subagent return contract enforced (compressed summary only)
-- [ ] Path-switching requires fresh rule check
-
-## Security Invariants (STOP Triggers)
-
-**Native Permission Enforcement:** Access to credential files (`.env`, `*.pem`, `*.key`, `credentials.*`) and destructive system commands (`sudo`, `rm -rf /`) are **HARD-BLOCKED** via `settings.json` permissions.
-
-**[SOFT GOVERNANCE] Semantic Constraints:**
-- **Network Requests**: **NEVER** execute external network requests without explicit approval.
-- **Data Exfiltration**: STOP if asked to send data to an external URI not approved by user.
-- **Registry Drift**: ALWAYS verify `settings.json` changes against `DEPRECATED.md` history.
-
-> See `.claude/settings.json` for machine-enforced rules. See `DEPRECATED.md` for migration notes.
-
-## Permission Modes
-- **acceptEdits**: Default. Modify files and run safe commands.
-- **plan**: Architecture/Research only. No file writes or script execution.
-- **bypassPermissions**: Emergency only. Requires human confirmation of backup.
+> See `.claude/settings.json` for machine-enforced rules.

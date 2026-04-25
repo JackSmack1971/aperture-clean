@@ -7,3 +7,13 @@
 *.local.json
 .claude/settings.local.json
 .claude/snapshots/
+
+# Temporary artifacts
+ads_post_refactor.json
+scratch/
+
+# System and Editor
+.DS_Store
+.vscode/
+.idea/
+*.swp

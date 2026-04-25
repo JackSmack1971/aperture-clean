@@ -12,4 +12,6 @@
 - Required Fields: [specify]
 
 ## Constraints
-- [boundaries and prohibited actions]
+- **Rule Check**: Read domain rules in `.claude/rules/` before editing.
+- **Failure Logging**: Record all tool errors in `FAILURE_LEDGER.md`.
+- **Boundaries**: [prohibited actions]
