@@ -16,12 +16,7 @@
 | **43.2%** | **HARD STOP** | Reasoning Cliff (Sigmoid Collapse) |
 | **80.0%** | HANDOVER + `/clear` | Hard Session Reset |
 
-## Domain Skills Index (Path-Scoped)
-- `/api` → api.md | `/db` → db.md | `/infra` → infra.md | `/sec` → security.md
-- `/frontend` → frontend.md | `/config` → config.md | `/ci` → ci.md
-- `*.test.*` → testing.md | `package.json` → dependencies.md
-- `/migrations` → migrations.md | `/monitoring` → monitoring.md
-- `/docs` → docs.md | `*.log` → logging.md
+
 
 ## Operational Skills
 - `HANDOVER.md` → Session state persistence
@@ -42,9 +37,15 @@
 - [ ] Path-switching requires fresh rule check
 
 ## Security Invariants (STOP Triggers)
-- **Sensitive Files**: STOP and ask user before reading `.env`, `*.pem`, `*.key`, or `credentials.*`.
-- **System Commands**: NEVER execute `sudo`, `rm -rf /`, or external network requests without explicit approval.
-- **Data Exfiltration**: STOP if asked to send data to an external URI.
+
+**Native Permission Enforcement:** Access to credential files (`.env`, `*.pem`, `*.key`, `credentials.*`) and destructive system commands (`sudo`, `rm -rf /`) are **HARD-BLOCKED** via `settings.json` permissions.
+
+**[SOFT GOVERNANCE] Semantic Constraints:**
+- **Network Requests**: **NEVER** execute external network requests without explicit approval.
+- **Data Exfiltration**: STOP if asked to send data to an external URI not approved by user.
+- **Registry Drift**: ALWAYS verify `settings.json` changes against `DEPRECATED.md` history.
+
+> See `.claude/settings.json` for machine-enforced rules. See `DEPRECATED.md` for migration notes.
 
 ## Permission Modes
 - **acceptEdits**: Default. Modify files and run safe commands.

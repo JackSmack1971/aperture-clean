@@ -6,8 +6,8 @@
     },
     {
       "trigger": "PreToolUse",
-      "patterns": ["/api/**", "/db/**", "/infra/**", "/sec/**", "/frontend/**"],
-      "action": "echo 'REMINDER: Applying path-scoped domain skill governance. Ensure minimum viable context is maintained.'"
+      "patterns": ["*"],
+      "action": "bash .claude/hooks/pre-tool-use.sh"
     }
   ]
 }
