@@ -120,7 +120,7 @@ if [[ -d "$TARGET" ]]; then
   while IFS= read -r f; do
     if [ "$FIRST_FILE" = true ]; then FIRST_FILE=false; else echo ","; fi
     calculate_ads "$f" || true
-  done < <(find "$TARGET" -name "*.md" -not -path '*/.*' -type f)
+  done < <(find "$TARGET" -name "*.md" -type f)
   echo "]"
 elif [[ -f "$TARGET" ]]; then
   calculate_ads "$TARGET"

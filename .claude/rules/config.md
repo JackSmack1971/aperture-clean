@@ -34,9 +34,9 @@ RESTRICTED: production_hardcoded_secret | assert NOT git_stage_contains(secret_v
 - [ ] TODO: Enforce: feature flags have defined owners and sunset dates — tracked in flag registry
 
 ## Forbidden Patterns
-- [ ] TODO: No environment detection via hostname or IP — use explicit `APP_ENV` variable
-- [ ] TODO: No config values duplicated across environments — use default + override pattern only
-- [ ] TODO: No boolean config values for multi-state conditions — use enum strings
+- [ ] **REQUIRED**: assert NOT hostname_detection
+- [ ] **REQUIRED**: assert NOT config_duplication
+- [ ] **RESTRICTED**: boolean_config_values | **REQUIRED**: enum_strings
 
 ## Context Engineering Notes
 - Do NOT read entire config directory to answer a single key question — grep exact key only

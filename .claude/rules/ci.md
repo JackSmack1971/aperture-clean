@@ -17,13 +17,10 @@ RESTRICTED: status_check_bypass | assert NOT git_stage_contains(continue_on_erro
 - [ ] TODO: Define branch protection rules: required checks before merge to `main`
 
 ## Required Checks (Merge Gates)
-- [ ] TODO: List ALL required status checks — incomplete list = security gap:
-  - [ ] Lint
-  - [ ] Unit tests (coverage threshold enforced)
-  - [ ] Integration tests
-  - [ ] Security scan (SAST / dependency audit)
-  - [ ] Build artifact validation
-- [ ] TODO: Define test parallelization strategy (matrix / shard count)
+- [ ] **REQUIRED**: status_checks_pass
+- [ ] **REQUIRED**: coverage_threshold_enforced
+- [ ] **REQUIRED**: slsa_level_target
+- [ ] **LIST**: [Lint, Unit tests, Integration tests, Security scan, Build validation]
 
 ## Artifact Management
 - [ ] TODO: Define artifact output paths and naming convention

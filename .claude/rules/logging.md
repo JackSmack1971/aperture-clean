@@ -21,13 +21,10 @@ validation_key: pii_absent
   - `TRACE`  → never enabled in production under any circumstance
 
 ## Structured JSON Schema
-- [ ] TODO: Define mandatory fields for every log line:
-  - `timestamp` — ISO 8601 UTC
-  - `level` — normalized string
-  - `service` — service/module name
-  - `trace_id` — correlation ID (must propagate across service boundaries)
-  - `message` — human-readable, static string (NO dynamic interpolation into message field)
-- [ ] TODO: Dynamic data goes in structured `context` / `fields` object — never in `message`
+- [ ] **REQUIRED**: timestamp == ISO_8601_UTC
+- [ ] **REQUIRED**: trace_id_propagation
+- [ ] **REQUIRED**: static_message_strings
+- [ ] **REQUIRED**: dynamic_data_in_fields_only
 - [ ] TODO: Define log schema location: `docs/log-schema.json`
 
 ## PII Policy
