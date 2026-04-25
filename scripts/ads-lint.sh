@@ -46,7 +46,8 @@ calculate_ads() {
   bolding=$((bolding / 2))
 
   local directives
-  directives=$(grep -oE '\b(NEVER|ALWAYS|EXTRACT|VERIFY|PROHIBIT|ENFORCE|REQUIRE)\b' "$target" 2>/dev/null | wc -l | tr -d '[:space:]')
+  directives=$(grep -oE '\b(ALWAYS|EXTRACT|VERIFY|ENFORCE|REQUIRE|RESTRICTED|REQUIRED)\b' "$target" 2>/dev/null | wc -l | tr -d '[:space:]')
+  # Note: NEVER is a CFV (omission bias trigger) — excluded from positive anchor count per SDO §CFV
 
   local numbered
   numbered=$(grep -E '^[0-9]+\.' "$target" 2>/dev/null | wc -l | tr -d '[:space:]')
@@ -86,7 +87,7 @@ calculate_ads() {
   local is_low; is_low=$(echo "$score < 6.0" | bc -l | tr -d '[:space:]')
   if [[ "$is_low" == "1" ]]; then
     if (( $(echo "$bolding < $units" | bc -l | tr -d '[:space:]') )); then recs+=("\"Add more bolded anchors for key constraints\""); fi
-    if (( $(echo "$directives < $units" | bc -l | tr -d '[:space:]') )); then recs+=("\"Increase NEVER/ALWAYS directive count\""); fi
+    if (( $(echo "$directives < $units" | bc -l | tr -d '[:space:]') )); then recs+=("\"Increase ALWAYS/RESTRICTED directive count\""); fi
     if [[ "$codeblocks" -lt 1 ]]; then recs+=("\"Include code examples for complex patterns\""); fi
   fi
 
