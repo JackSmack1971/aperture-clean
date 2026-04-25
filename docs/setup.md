@@ -41,12 +41,11 @@ Example `settings.local.json`:
 
 ## 5. Directory Structure Overview
 - `.claude/rules/`: Path-scoped domain governance.
-- `.claude/skills/`: Agent-specific capability descriptors.
 - `.claude/templates/`: Handover, Subagent, and Compaction templates.
 - `.claude/hooks/`: Session lifecycle automation.
 
 ## 6. Troubleshooting
-- **Skill not loading?** Ensure your path matches the trigger in `CLAUDE.md`.
+- **Rules not loading?** Ensure your path matches the trigger in `CLAUDE.md`.
 - **Context saturation high?** Execute the Compaction Protocol at 38%.
 - **Git errors in pre-compact?** Ensure you are at the repository root.
 
