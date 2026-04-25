@@ -25,6 +25,7 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
 
 ### Fixed
+- **SDO-H-04**: Patched `migrations.md` to eliminate CFV in context engineering notes.
 - **SDO-H-03 + CWO-F**: Patched `api.md` to fix security invariants and reordered for attention primacy.
 - **SDO-H-02 + CWO-F**: Patched `security.md` to fix secrets hygiene invariants and reordered for attention primacy.
 - **SDO-H-01 + CWO-F**: Patched `logging.md` to fix PII scrubbing invariants and reordered for attention primacy.

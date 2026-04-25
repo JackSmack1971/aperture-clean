@@ -30,7 +30,7 @@
 - [ ] TODO: Migration history table is read-only to application — no app-level writes
 
 ## Context Engineering Notes
-- **NEVER** read the full migration history directory — can contain hundreds of files / 100K+ tokens
+- RESTRICTED: full_migration_dir_read | REQUIRED: read named migration file by timestamp only
 - To understand current schema: read `db/docs/schema.md` — NOT the migration chain
 - To debug a specific migration: read ONLY the named migration file by timestamp
 - For migration conflict resolution → subagent reads conflicting files; returns version ordering only
