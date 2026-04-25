@@ -25,6 +25,7 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `.claude/templates/SUBAGENT.md`: Injected rule-loading and failure-logging constraints for delegated tasks.
 
 ### Fixed
+- **CWO-C + SDO-M-02**: Replaced `SUBAGENT.md` with the bounded JSON return contract.
 - **SDO-M-01**: Replaced `COMPACTION.md` with the Pre-Compaction Decision Tree protocol.
 - **SDO-M-03**: Patched `config.md` to eliminate CFV in secret reference convention.
 - **SDO-H-04**: Patched `migrations.md` to eliminate CFV in context engineering notes.
