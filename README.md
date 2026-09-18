@@ -58,13 +58,13 @@ The result: a lean startup payload, domain-specific governance that appears exac
 > A domain rule that loads at startup is a tax on every operation, most of which have nothing to do with that domain.
 
 > **V. Manual compaction at 38%. RESTRICTED: auto-compaction at 95%.**  
-> At 38% saturation, the model remains in the Stability Plateau. Research establishes a sigmoid collapse at exactly 43.2% saturation. Compact early, compact deliberately.
+> At 38% saturation, the model is expected to remain in a stability plateau; 43.2% is a self-enforced checkpoint. Both figures are working heuristics, not validated results (see RT-2 in [`docs/research-threads.md`](docs/research-threads.md)). Compact early, compact deliberately.
 
 > **VI. Tiered routing maximizes the reasoning-to-cost ratio.**  
-> Direct low-latency tasks (classification, log extraction) to Haiku 4.5. Use Sonnet 4.6 for implementation and Opus 4.6 for architectural validation. Routing is managed via `.claude/settings.json`.
+> Direct low-latency tasks (classification, log extraction) to Haiku 4.5. Use Sonnet 4.6 for implementation and Opus 4.6 for architectural validation. Routing to cheaper models is a design intent, not yet an active mechanism: the documented route is the `model:` field in a subagent's `.claude/agents/*.md` frontmatter (none are defined in this repo yet; see [`SUBAGENT.md`](.claude/templates/SUBAGENT.md)).
 
 > **VII. Compression follows the SCOPE Law of Priority.**  
-> Tool output residue is evicted first (~80% of bloat), followed by exploratory reads. Architectural decisions and active blockers must be preserved across session boundaries.
+> Tool output residue is evicted first, followed by exploratory reads. Architectural decisions and active blockers must be preserved across session boundaries.
 
 ---
 
@@ -486,6 +486,22 @@ Aperture v3.0 introduces high-level specifications for future-state context engi
 - [`v3-hopfield-spec.md`](docs/v3-hopfield-spec.md) — Associative session memory (attractor states).
 - [`v3-pcac-spec.md`](docs/v3-pcac-spec.md) — Predictive Coding Admission Controller (free energy scoring).
 - [`v3-sheaf-spec.md`](docs/v3-sheaf-spec.md) — Consistency constraints via sheaf cohomology.
+
+---
+
+## Research Basis
+
+Aperture's lifecycle design is informed by [`docs/research/LLM_Agent_Context_Management.md`](docs/research/LLM_Agent_Context_Management.md). Figures below are **reported by the cited works on their own benchmarks and harnesses; none were measured on Aperture.**
+
+| Lifecycle stage | Research finding | Aperture component | Status |
+|---|---|---|---|
+| Ingestion / selection | AST-based repo maps outperform semantic search for code (Aider's map defaults to a ~1K-token budget). Constrain the action space without mutating the prompt prefix. | WISC "Select"; `permissions.deny`; `.claudeignore` (token filter only) | Repo maps not implemented (v3 spec). `.claudeignore` effect unverified. |
+| Retention | Prefix caches need byte-stable ordering: static content first, volatile content last. CacheScout reports +10–18 pp hit rate and up to 45% lower TTFT on multi-agent workloads. | Payload ordering contract | Documented; unmeasured here. |
+| Compression | Token-level pruning damages code syntax. Action-preserving methods report up to 33% fewer tokens with no pass@1 loss (CoACT) and 23–54% (SWE-Pruner) on SWE-bench Verified. Rule-based elision before LLM summarization was the most efficient staging in a harness study; retrieval machinery for elided content was rarely used. | [`COMPACTION.md`](.claude/templates/COMPACTION.md) staged order (RT-5) | Staging added; unmeasured. |
+| Externalization | Event logs and version-controlled memory persist evicted state (GCC reports >80% on SWE-bench Verified with Claude-4-Sonnet). Itemized delta updates avoid context collapse (ACE reports up to +10.6%). | HANDOVER, FAILURE_LEDGER, snapshots | Ledger is append-only/delta-based; RT-8 open. |
+| Reset / delegation | Failed drafts in context bias later reasoning (contextual drag); a clean-slate context is the reliable remedy. Subagents isolate exploration noise from the parent. | [`SUBAGENT.md`](.claude/templates/SUBAGENT.md) clean-slate retry (RT-6, RT-7) | Rule added; aggregate token cost unmeasured. |
+
+**Not established by this research** (treat as unreproduced until measured): the 38% plateau and 43.2% checkpoint thresholds (RT-2); the Haiku-routing, compression, and cache figures formerly tagged `[VERIFIED: CWD doc]` (now labelled unverified in `CLAUDE.md` and `settings.json`); the 45,000–50,000-token typical startup payload; the 60–85% caching cost reduction at 10+ calls. The budget-aware work in the research notes that fixed-percentage triggers are rigid; Aperture's thresholds remain heuristics.
 
 ---
 

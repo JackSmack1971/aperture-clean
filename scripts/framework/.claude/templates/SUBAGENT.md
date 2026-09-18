@@ -44,6 +44,10 @@ does not trigger loading; Read a sibling file or the rule file itself before tha
 **Boundaries:** [prohibited actions — specific to delegation scope]
 
 ## Execution Model Routing
-<!-- Route to Haiku 4.5 for: binary classification, saturation check, log extraction -->
-<!-- Route to Sonnet 4.6 for: multi-file reads, schema extraction, patch generation -->
-<!-- Route to Opus 4.6 for: security invariant review, architectural decisions -->
+<!-- Per subagent: `model:` in .claude/agents/<name>.md (none defined yet). Haiku: classification, log extraction | Sonnet: multi-file reads, patches | Opus: security/architecture review -->
+<!-- Descriptions inform delegation: keep terse. Parent+child+return cost is unmeasured (RT-7) -->
+
+## Clean-Slate Retry (RT-6, unvalidated; contextual drag)
+IF the same error persists after 2 failed attempts (default): RESTRICTED: a further attempt in the polluted context.
+REQUIRED: delegate to a fresh subagent given ONLY goal, constraints, exact error text, file:line pointers.
+RESTRICTED: pass prior failed drafts or reasoning to it. Log the signature to FAILURE_LEDGER.md (signature + lesson only).

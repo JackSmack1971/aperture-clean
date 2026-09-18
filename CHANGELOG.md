@@ -11,6 +11,17 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+- README: removed the unsupported "~80% of bloat" figure, reworded the 38%/43.2% thresholds as unvalidated heuristics (consistent with RT-2), and corrected model routing to a design intent with per-subagent `model:` frontmatter as the documented mechanism.
+- `COMPACTION.md`: added staging order (deterministic rule-based elision before LLM summary), a restriction on token-level pruning of code/config, and a next-action-preservation requirement; marked thresholds as unvalidated heuristics (RT-2, RT-5).
+- `SUBAGENT.md`: added a clean-slate retry rule (fresh subagent, no prior failed drafts; RT-6) and replaced the routing comments with the per-subagent `model:` frontmatter mechanism, noting that no agents are defined yet.
+- `FAILURE_LEDGER.md` template: aligned step 1 with the grep-dedupe protocol in `CLAUDE.md`; entries store signature + lesson only (no failed code or reasoning), are appended as single-row deltas, and rely on `pre-compact.sh` rotation for size (contextual drag / context collapse; RT-8).
+
+### Added
+- `docs/research/LLM_Agent_Context_Management.md`: context-lifecycle literature review (ingestion, cache retention, compression, externalization, reset/delegation) as the cited basis for template changes.
+- `docs/research-threads.md`: RT-5 (staged compaction), RT-6 (clean-slate retry), RT-7 (subagent isolation economics), RT-8 (handover brevity vs context collapse) as open, unvalidated hypotheses derived from the research.
+- README: "Research Basis" section mapping the five context-lifecycle stages to Aperture components, with reported figures scoped to their source benchmarks and an explicit list of claims the research does not establish.
+
 ### Fixed — 2026-09-18 context-engineering audit remediation
 A context-engineering audit (external report, 2026-09-18, commit `a1a1c49`) found the framework's
 central claim — that path-scoped rules "cost zero tokens at startup" — was not implemented:
@@ -77,6 +88,7 @@ each other about how rules load. This release closes that gap (audit recommendat
   decision for the maintainer, per the audit's own "needs the maintainer's decision" framing.
 - **Documentation**: Deleted stale `ROADMAP.md` (legacy research-heavy vision doc).
 - **Audit**: Completed documentation rot audit; purged all phase-specific roadmaps and stale templates.
+- `COMPACTION.md`: quoted the `/compact preserve: [...]` scalars; the file previously failed to parse as YAML.
 
 ---
 
