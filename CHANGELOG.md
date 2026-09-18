@@ -85,6 +85,7 @@ each other about how rules load. This release closes that gap (audit recommendat
   decision for the maintainer, per the audit's own "needs the maintainer's decision" framing.
 - **Documentation**: Deleted stale `ROADMAP.md` (legacy research-heavy vision doc).
 - **Audit**: Completed documentation rot audit; purged all phase-specific roadmaps and stale templates.
+- `COMPACTION.md`: quoted the `/compact preserve: [...]` scalars; the file previously failed to parse as YAML.
 
 ---
 
