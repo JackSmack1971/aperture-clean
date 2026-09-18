@@ -11,9 +11,13 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+- README: removed the unsupported "~80% of bloat" figure, reworded the 38%/43.2% thresholds as unvalidated heuristics (consistent with RT-2), and corrected model routing to a design intent with per-subagent `model:` frontmatter as the documented mechanism.
+
 ### Added
 - `docs/research/LLM_Agent_Context_Management.md`: context-lifecycle literature review (ingestion, cache retention, compression, externalization, reset/delegation) as the cited basis for template changes.
 - `docs/research-threads.md`: RT-5 (staged compaction), RT-6 (clean-slate retry), RT-7 (subagent isolation economics), RT-8 (handover brevity vs context collapse) as open, unvalidated hypotheses derived from the research.
+- README: "Research Basis" section mapping the five context-lifecycle stages to Aperture components, with reported figures scoped to their source benchmarks and an explicit list of claims the research does not establish.
 
 ### Fixed — 2026-09-18 context-engineering audit remediation
 A context-engineering audit (external report, 2026-09-18, commit `a1a1c49`) found the framework's
