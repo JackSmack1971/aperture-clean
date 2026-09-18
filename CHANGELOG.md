@@ -11,6 +11,10 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- `docs/research/LLM_Agent_Context_Management.md`: context-lifecycle literature review (ingestion, cache retention, compression, externalization, reset/delegation) as the cited basis for template changes.
+- `docs/research-threads.md`: RT-5 (staged compaction), RT-6 (clean-slate retry), RT-7 (subagent isolation economics), RT-8 (handover brevity vs context collapse) as open, unvalidated hypotheses derived from the research.
+
 ### Fixed — 2026-09-18 context-engineering audit remediation
 A context-engineering audit (external report, 2026-09-18, commit `a1a1c49`) found the framework's
 central claim — that path-scoped rules "cost zero tokens at startup" — was not implemented:

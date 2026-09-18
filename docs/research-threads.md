@@ -46,6 +46,51 @@ hypergraph retrieval. Measure: ADS scores, task completion, token consumption.
 **Target:** v3.0.0 Phase 5 (graduation gate for hypergraph to primary retrieval)
 **Blocked by:** v3-hypergraph-spec.md implementation complete
 
+## RT-5: Staged Compaction (Rule-Based Elision Before LLM Summary)
+**Status:** OPEN
+**Hypothesis:** Removing bulk tool output by deterministic rules before an LLM summary
+(`/compact preserve:`) retains more task-relevant evidence per token than summary alone.
+Source: harness-design study and action-preserving compression work in
+`docs/research/LLM_Agent_Context_Management.md` (results are from other harnesses,
+not Aperture).
+**Method:** A/B on matched tasks: summary-only vs elision+summary. Measure input/cache
+tokens, task success, and retention of exact error lines and file:line pointers.
+**Target:** COMPACTION.md staging order (v3.2.x)
+**Blocked by:** Baseline `/context` and `/usage` measurements at a pinned Claude Code version
+
+## RT-6: Clean-Slate Retry vs Same-Context Retry (Contextual Drag)
+**Status:** OPEN
+**Hypothesis:** After repeated failures on one error, a retry in a fresh subagent that
+receives only goal, constraints, exact error, and file pointers (no failed drafts)
+succeeds more often than continuing in the polluted context. Source: contextual-drag
+study cited in the research document (structural anchoring to earlier erroneous drafts).
+**Method:** Seeded failing tasks; compare success after 3rd attempt: continue vs fresh
+subagent. Count parent + child tokens.
+**Target:** SUBAGENT.md clean-slate retry rule (v3.2.x)
+**Blocked by:** Task suite and parent+child token accounting
+
+## RT-7: Subagent Isolation Economics
+**Status:** OPEN
+**Hypothesis:** Delegating noisy exploration keeps the parent window leaner, but aggregate
+(parent + child + return) usage may be higher; net benefit depends on task shape.
+The research document asserts the parent-side benefit; aggregate accounting is not
+established for Aperture.
+**Method:** Matched exploration tasks inline vs delegated; record parent, child, and
+return-payload tokens separately plus task success.
+**Target:** SUBAGENT.md return-contract sizing (currently <=500 tokens, unvalidated)
+**Blocked by:** Token accounting at pinned version
+
+## RT-8: Handover Brevity vs Context Collapse
+**Status:** OPEN
+**Hypothesis:** A 150-token HANDOVER may lose details that itemized delta-entry
+playbooks retain (brevity bias / context collapse, per the ACE work in the research
+document). The CHANGELOG 3.2.0 claim of eliminating a "60% fact destruction rate" has no
+reproducible measurement in this repo.
+**Method:** Seed sessions with N known facts; resume from 150-token HANDOVER vs a
+pointer-based handover; score fact retention and resume success.
+**Target:** HANDOVER.md schema (HO-v1.0) review
+**Blocked by:** Session corpus with known ground-truth facts
+
 ## Adding a Research Thread
 When new empirical evidence requires investigation:
 1. Add RT-N entry above with: Status, Hypothesis, Method, Target, Blocked by
