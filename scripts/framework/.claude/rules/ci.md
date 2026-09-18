@@ -1,5 +1,10 @@
+---
+paths:
+  - ".github/**"
+  - "ci/**"
+---
 # CI Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /.github or /ci files -->
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter (2026-09-18 audit) -->
 <!-- Static content only. Cache-compatible. Target: ≤55 lines. -->
 
 <!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->

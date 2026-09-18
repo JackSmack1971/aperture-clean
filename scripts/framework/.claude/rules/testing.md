@@ -1,8 +1,15 @@
+---
+paths:
+  - "tests/**"
+  - "*.spec.*"
+  - "*.test.*"
+---
 # Testing Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /tests or *.test.* -->
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter (2026-09-18 audit) -->
 <!-- Static content only. Cache-compatible. Target: ≤55 lines. -->
 
 <!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+<!-- Advisory only: loads on Read of a matching file, so cannot prevent that first read. -->
 RESTRICTED: coverage_report_read | assert NOT read_path MATCHES "coverage/**"
   REQUIRED: parse_failing_lines_only | source: CI_logs
 RESTRICTED: sleep_in_test | assert NOT git_stage_contains(setTimeout|sleep)

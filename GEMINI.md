@@ -13,8 +13,9 @@ Non-negotiable. Violation breaks framework for all users.
 **NEVER** modify without human approval/backup:
 
 - `scripts/bootstrap-claude-framework.sh` (installer)
-- `.claudeignore` (ingestion/security)
-- `.claude/settings.json` (permissions)
+- `.claudeignore` (token-ingestion filter only, not a security control — see
+  `.claude/settings.json` `permissions.deny` for enforced credential protection)
+- `.claude/settings.json` (permissions, hooks)
 
 **NEVER** let `CLAUDE.md` exceed 100 lines.
 **NEVER** create `.claude/rules/*.md` with dynamic content/credentials. Must be 100% static.

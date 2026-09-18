@@ -1,15 +1,17 @@
+---
+paths:
+  - "security/**"
+  - "*.sarif"
+---
 # Security Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected when agent reads /security/** or auth/crypto files -->
-<!-- Static content only. Cache-compatible. Target: ≤55 lines. -->
-
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter. Static content only. Cache-compatible. Target: ≤55 lines. -->
 <!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
-RESTRICTED: env_file_read | assert NOT read_path MATCHES [".env*", "secrets/**", "credentials/**"]
+<!-- Credential reads (.env*, secrets/**, credentials/**) are enforced via .claude/settings.json permissions.deny, not this file — this text loads too late to stop a first read. -->
 RESTRICTED: credential_output | assert NOT output_contains_credential
   validation_key: placeholder_only | expected_format: "{{SECRET_NAME}}"
 RESTRICTED: secret_commit | assert NOT git_stage_contains_credential
   required: pre_commit_hook_active == true
 <!-- ══════════════════════════════════════════════════════════ -->
-
 ## SAST & Vulnerability Scanning
 - Pointer: `docs/security-policy.md` — threat model, approved scanning tools, escalation path
 - Pointer: `security/findings/README.md` — active CVE tracking register

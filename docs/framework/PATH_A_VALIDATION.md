@@ -1,5 +1,14 @@
 # Path A Implementation Validation: Manual Governance Stress-Test
 
+> **Historical design note (2026-09-18):** This document is a hypothetical desk-check
+> written by the framework's own maintainer session, not an observed or measured
+> runtime result — no Claude Code session was actually run to produce the "findings"
+> below. The 2026-09-18 context-engineering audit found the manual-loading and
+> operation-count protocol this document validates is superseded by native
+> `paths:`-scoped rule injection (see `CLAUDE.md` and `CHANGELOG.md` `[Unreleased]`).
+> Retained for historical record of the Path A → native-loading decision; do not
+> treat its tables as measured evidence.
+
 This document validates the enforceability and discoverability of the manual Aperture-Clean protocols in the absence of lifecycle hook automation.
 
 ## Validation 1: Rule-Loading Discoverability

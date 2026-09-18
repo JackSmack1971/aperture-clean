@@ -26,6 +26,7 @@ BRANCH=$(git branch --show-current 2>/dev/null)
 # RESTRICTED: mktemp | REQUIRED: static temp file in .claude/snapshots
 TEMP_FAILURES=".claude/snapshots/last_failures.tmp"
 mkdir -p .claude/snapshots
+: > "$TEMP_FAILURES"
 
 # Extract patterns from STDIN (piped by Claude Code)
 while IFS= read -r line; do
@@ -55,6 +56,23 @@ EOF
   fi
 done < "$TEMP_FAILURES"
 rm -f "$TEMP_FAILURES"
+
+# SECTION 2.5: LEDGER ROTATION (enforce MAX_SIZE)
+# Drops the oldest entries (by ---delimited record) until the ledger is back
+# under MAX_SIZE, keeping the header and the most recent records.
+CURRENT_SIZE=$(wc -c < "$LEDGER" | tr -d '[:space:]')
+if [[ "$CURRENT_SIZE" -gt "$MAX_SIZE" ]]; then
+  ROTATED="${LEDGER}.rotated"
+  HEADER_LINES=$(grep -n '^---$' "$LEDGER" | head -1 | cut -d: -f1)
+  HEADER_LINES=${HEADER_LINES:-1}
+  head -n $((HEADER_LINES - 1)) "$LEDGER" > "$ROTATED"
+  echo "" >> "$ROTATED"
+  # Keep records from the tail, growing backward until under budget
+  TAIL_RECORDS=$(tail -c "$MAX_SIZE" "$LEDGER" | sed -n '/^---$/,$p')
+  echo "$TAIL_RECORDS" >> "$ROTATED"
+  mv "$ROTATED" "$LEDGER"
+  log_stderr "FAILURE_LEDGER.md rotated: exceeded MAX_SIZE (${MAX_SIZE} bytes), oldest records dropped"
+fi
 
 # SECTION 3: PRESERVE COMMAND GENERATION
 echo "### COMPACTION RESTORE COMMAND"

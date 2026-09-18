@@ -1,10 +1,15 @@
+---
+paths:
+  - "infra/**"
+---
 # Infra Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /infra/** -->
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter (2026-09-18 audit) -->
 <!-- Static content only. Cache-compatible. Target: ≤55 lines. -->
 
 <!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
 RESTRICTED: iac_secret | assert NOT git_stage_contains(raw_credential)
   REQUIRED: secret_manager_reference | expected: AWS/GCP/Vault/Doppler
+<!-- Advisory only below: loads on Read of a matching file, so cannot prevent that first read. -->
 RESTRICTED: state_file_read | assert NOT read_path MATCHES ["*.tfstate", "*.tfplan"]
   REQUIRED: bash_query_only | example: "terraform show -json"
 <!-- ══════════════════════════════════════════════════════════ -->

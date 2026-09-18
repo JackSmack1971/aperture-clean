@@ -1,5 +1,13 @@
 # Aperture-Clean Framework Walkthrough: Path A (Manual Governance)
 
+> **Historical design note (2026-09-18):** These are hypothetical, hand-written
+> scenarios — no Claude Code session actually executed them, and the "Compliance
+> Result" and "Reliability Score" figures below are illustrative, not measured.
+> The 2026-09-18 context-engineering audit found the manual op-count / manual
+> rule-read protocol these walkthroughs validate is superseded by native
+> `paths:`-scoped rule injection (see `CLAUDE.md` and `CHANGELOG.md` `[Unreleased]`).
+> Retained for historical record; do not cite these numbers as evidence.
+
 This walkthrough demonstrates the framework in action across three realistic scenarios, validating that manual protocols deliver high-fidelity context engineering without hook automation.
 
 ---

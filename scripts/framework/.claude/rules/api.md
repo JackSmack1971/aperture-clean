@@ -1,11 +1,14 @@
+---
+paths:
+  - "api/**"
+---
 # API Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected ONLY when agent reads/edits /api/** -->
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter (2026-09-18 audit) -->
 <!-- Static content only. No secrets, no tokens, no env values. Cache-compatible. -->
 
 <!-- ═══════════════ HARD STOPS — READ FIRST ═══════════════ -->
-<!-- assert NOT read(env_files) — credentials via OS keychain / secret manager ONLY -->
-RESTRICTED: env_file_read | assert NOT read_path MATCHES ".env*"
-  REQUIRED: credential_source IN [os_keychain, secret_manager, placeholder_convention]
+<!-- Credential reads (.env*, secrets/**, credentials/**): enforced via .claude/settings.json -->
+<!-- permissions.deny, NOT this file — this text loads too late to stop a first read. -->
 RESTRICTED: auth_body_log | assert NOT log_contains(request_body) WHERE path MATCHES auth_endpoints
   validation_key: pii_absent_from_logs
 <!-- assert NOT reorder(middleware_chain) — CLAUDE.md Security Invariants §API -->

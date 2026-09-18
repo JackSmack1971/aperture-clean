@@ -1,6 +1,70 @@
 {
-  "schema_version": "aperture-clean-v3.2.0",
   "model": "claude-sonnet-4-6",
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(secrets/**)",
+      "Read(credentials/**)",
+      "Read(**/credentials.*)",
+      "Edit(.env)",
+      "Edit(.env.*)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Edit(**/*.pem)",
+      "Edit(**/*.key)",
+      "Edit(secrets/**)",
+      "Edit(credentials/**)",
+      "Edit(**/credentials.*)",
+      "Write(.env)",
+      "Write(.env.*)",
+      "Write(**/.env)",
+      "Write(**/.env.*)",
+      "Write(**/*.pem)",
+      "Write(**/*.key)",
+      "Write(secrets/**)",
+      "Write(credentials/**)",
+      "Write(**/credentials.*)",
+      "Bash(sudo *)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -fr /*)",
+      "Bash(rm -rf ~*)",
+      "Bash(rm -fr ~*)",
+      "Bash(cat .env*)",
+      "Bash(cat *.pem)",
+      "Bash(cat *.key)",
+      "Bash(cat secrets/*)",
+      "Bash(cat credentials/*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'APERTURE-CLEAN: Session active. Run /context to check saturation. Review FAILURE_LEDGER.md for known anti-patterns. Domain rules load automatically on path entry (see .claude/rules/*.md paths: frontmatter).'"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/pre-compact.sh"
+          }
+        ]
+      }
+    ]
+  },
   "model_routing": {
     "haiku": {
       "model": "claude-haiku-4-5-20251001",
@@ -10,7 +74,7 @@
         "binary_path_classification",
         "scope_semantic_grouping"
       ],
-      "rationale": "4-5x faster than Sonnet; mandated for binary classification + SCOPE extraction [VERIFIED: CWD doc]"
+      "rationale": "UNVERIFIED — external claim (faster/cheaper on classification-shaped tasks), not reproduced against this repository or a pinned Claude Code runtime. No agent or tool in this repo currently implements per-task model routing; this block is a design intent, not an enforced mechanism."
     },
     "sonnet": {
       "model": "claude-sonnet-4-6",
@@ -21,7 +85,7 @@
         "context_management",
         "codebase_exploration"
       ],
-      "rationale": "70% higher token efficiency on codebase exploration [VERIFIED: CWD doc]"
+      "rationale": "UNVERIFIED — external claim, not reproduced against this repository. Design intent only; not enforced by any hook or agent."
     },
     "opus": {
       "model": "claude-opus-4-6",
@@ -30,92 +94,23 @@
         "architectural_gap_assessment",
         "odcv_neutralization"
       ],
-      "rationale": "ASL-3 floor required for ODCV neutralization; architectural reasoning only [VERIFIED: CWD doc]"
+      "rationale": "UNVERIFIED — external claim, not reproduced against this repository. Design intent only; not enforced by any hook or agent."
     }
-  },
-  "permissions": [
-    {
-      "tool": "Read",
-      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
-      "action": "deny",
-      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
-    },
-    {
-      "tool": "Write",
-      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
-      "action": "deny",
-      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
-    },
-    {
-      "tool": "Edit",
-      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
-      "action": "deny",
-      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
-    },
-    {
-      "tool": "MultiEdit",
-      "pattern": ".*\\.(env|pem|key)$|.*credentials\\..*",
-      "action": "deny",
-      "message": "Security policy: Credential files are immutable (CLAUDE.md Security Invariants)"
-    },
-    {
-      "tool": "Bash",
-      "pattern": "\\bsudo\\b|\\brm\\s+-r[fF]\\s+/",
-      "action": "deny",
-      "message": "Security policy: Destructive system commands blocked (CLAUDE.md Security Invariants)"
-    }
-  ],
-  "tools": {
-    "enabled": ["Read", "Write", "Edit", "MultiEdit", "Bash", "Glob", "Grep"]
-  },
-  "hooks": {
-    "hooksFile": ".claude/hooks/hooks.json"
   },
   "context_thresholds": {
     "compaction": 0.38,
     "cliff_halt": 0.432,
     "handover_clear": 0.80,
-    "auto_compact_failsafe": 0.95
-  },
-  "system_prompt": {
-    "exclude_dynamic_sections": true,
-    "version_tag": "APERTURE-CLEAN v3.2.0"
-  },
-  "db8_mitigations": {
-    "idempotent_cleanup": {
-      "guard": "session_resume_epoch_token",
-      "key": "idempotency_key",
-      "transitions": "monotonic",
-      "assertion": "block_repeated_retention_shrinkage"
-    },
-    "canonical_prompts": {
-      "enforce_deterministic_json_ordering": true,
-      "enforce_fixed_role_sequencing": true,
-      "enforce_normalized_unicode_whitespace": true,
-      "enforce_explicit_system_prompt_versioning": true
-    },
-    "cache_epoch_key_tuple": [
-      "prefix_hash",
-      "schema_version",
-      "cleanup_epoch",
-      "tool_state_version"
-    ],
-    "payload_isolation": {
-      "defer_loading": true
-    }
+    "note": "UNVERIFIED — these keys are not part of the documented settings.json schema and are not read by the Claude Code runtime. They record the WISC protocol's design thresholds (see CLAUDE.md); enforcement is the agent following CLAUDE.md and running /context manually, not a runtime feature of this file."
   },
   "cache_epoch_versioning": {
-    "enabled": true,
+    "enabled": false,
+    "note": "UNVERIFIED / NOT_IMPLEMENTED — design idea only. No mechanism in this repository reads or writes these keys; they are not part of the documented settings.json schema. Retained as a record of the idea, not as active configuration.",
     "key_dimensions": [
       "prefix_hash",
       "schema_version",
       "cleanup_epoch",
       "tool_state_version"
-    ],
-    "idempotency": {
-      "session_epoch_token": true,
-      "monotonic_state_transitions": true
-    },
-    "rationale": "Prevents 100% cache miss on resume via db8 protocol [VERIFIED: CWD doc]"
+    ]
   }
 }

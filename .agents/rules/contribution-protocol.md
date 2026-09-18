@@ -2,11 +2,16 @@
 <!-- Injected when agent creates or modifies any .claude/ framework file -->
 
 ## Rule File Schema (MANDATORY — all 13 must conform)
-Every `.claude/rules/*.md` file must contain exactly these sections in this order:
+Every `.claude/rules/*.md` file must contain exactly these sections in this order. The
+`paths:` frontmatter is REQUIRED — a rule file without it loads unconditionally at every
+session start instead of only on Read of a matching file (F01, 2026-09-18 audit).
 
 ```
+---
+paths:
+  - "[glob]"
+---
 # [Domain] Rules — Path-Scoped Context
-<!-- Injected ONLY when agent reads/edits files under /[path] -->
 <!-- Static content only. [Optional: CRITICAL note]. Cache-compatible. -->
 <!-- Target: ≤50 lines. Deep detail lives in pointer docs below. -->
 
@@ -26,7 +31,8 @@ Every `.claude/rules/*.md` file must contain exactly these sections in this orde
 ```
 
 **Validation checklist before committing a new rule file:**
-- [ ] Header comment block present with correct injection trigger path
+- [ ] `paths:` frontmatter present at the top of the file with the correct glob(s)
+- [ ] Header comment block present
 - [ ] `Static content only` assertion in header
 - [ ] `Cache-compatible` declaration in header
 - [ ] Line target stated (≤50 or ≤55)
@@ -48,7 +54,7 @@ Every `.claude/rules/*.md` file must contain exactly these sections in this orde
 
 
 ## Adding a New Rule File — Use `/add-rule` Workflow
-Do not manually create rule files. Use the workflow: `.agent/workflows/add-rule.md`
+Do not manually create rule files. Use the workflow: `.agents/workflows/add-rule.md`
 The workflow enforces the schema, line count, and sync steps atomically.
 
 ## Modifying Existing Rule Files

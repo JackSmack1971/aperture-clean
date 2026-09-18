@@ -17,11 +17,16 @@ Responsible role:   [e.g. "Backend lead / queue engineer"]
 ## Execution Steps
 
 ### Step 1 — Draft the rule file
-Create `.claude/rules/[domain].md` using EXACTLY this schema:
+Create `.claude/rules/[domain].md` using EXACTLY this schema. The `paths:` frontmatter is
+REQUIRED — without it, Claude Code loads the rule unconditionally at every session start
+instead of only when a matching file is read (this was F01 in the 2026-09-18 audit).
 
 ```markdown
+---
+paths:
+  - "[glob, e.g. workers/**]"
+---
 # [Domain] Rules — Path-Scoped Context
-<!-- Injected ONLY when agent reads/edits files under [trigger] -->
 <!-- Static content only. Cache-compatible. -->
 <!-- Target: ≤50 lines. Deep detail lives in pointer docs below. -->
 
@@ -52,10 +57,12 @@ Create `.claude/rules/[domain].md` using EXACTLY this schema:
 - Last reviewed: [ TODO: date ]
 ```
 
-### Step 2 — Validate line count
+### Step 2 — Validate line count and frontmatter
 ```bash
 wc -l .claude/rules/[domain].md
 # Must be ≤50. If over: cut, do not pad with empty lines.
+head -1 .claude/rules/[domain].md
+# Must be "---" (start of paths: frontmatter) — a rule file without it loads unconditionally.
 ```
 
 ### Step 2.5 — ADS Lint Check (attention quality gate)

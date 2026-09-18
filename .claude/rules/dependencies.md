@@ -1,8 +1,15 @@
+---
+paths:
+  - "package.json"
+  - "*.lock"
+---
 # Dependencies Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected when agent reads package.json, *.lock, etc. -->
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter (2026-09-18 audit) -->
 <!-- Static content only. Cache-compatible. Target: ≤50 lines. -->
 
 <!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+<!-- Advisory only: this rule loads on Read of a matching file, so it cannot prevent that -->
+<!-- first read — it applies to subsequent reads. Not a deterministic control (2026-09-18 audit). -->
 RESTRICTED: lockfile_read | assert NOT read_path MATCHES "*.lock"
   REQUIRED: bash_list_command | example: "npm list <pkg>"
 RESTRICTED: latest_version_spec | assert NOT version_specifier MATCHES ["*", "latest"]

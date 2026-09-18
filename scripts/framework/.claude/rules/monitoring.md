@@ -1,8 +1,14 @@
+---
+paths:
+  - "monitoring/**"
+  - "*.dashboard.json"
+---
 # Monitoring Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected when agent reads /monitoring/** or dashboard files -->
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter (2026-09-18 audit) -->
 <!-- Static content only. Cache-compatible. Target: ≤55 lines. -->
 
 <!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+<!-- Advisory only: loads on Read of a matching file, so cannot prevent that first read. -->
 RESTRICTED: dashboard_json_read | assert NOT read_path MATCHES "*.dashboard.json"
   REQUIRED: api_query_only | target: [Grafana_API, Datadog_API]
 RESTRICTED: prometheus_rule_read | assert NOT read_path MATCHES "rules/*.yaml"

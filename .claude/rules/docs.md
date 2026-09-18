@@ -1,8 +1,13 @@
+---
+paths:
+  - "docs/**"
+---
 # Docs Rules — Path-Scoped Context
-<!-- APERTURE-CLEAN v1.0 | Injected when agent reads /docs/** or *.md files -->
+<!-- APERTURE-CLEAN v1.1 | Native path-scoped load via paths: frontmatter (2026-09-18 audit) -->
 <!-- Static content only. Cache-compatible. Target: ≤55 lines. -->
 
 <!-- ═══ HARD STOPS — READ FIRST ═══════════════════════════════ -->
+<!-- Advisory only: loads on Read of a matching file, so cannot prevent that first read. -->
 RESTRICTED: doc_tree_ingestion | assert NOT full_directory_read WHERE path MATCHES "/docs/**"
   REQUIRED: navigation_via_readme | target: docs/README.md
 RESTRICTED: adr_deletion | assert NOT git_stage_contains(DELETE) WHERE path MATCHES "docs/decisions/*.md"

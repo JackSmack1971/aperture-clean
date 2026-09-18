@@ -9,7 +9,7 @@
 ## Return Contract
 <!-- assert NOT return_format(Markdown) -->
 <!-- assert NOT return_format(Summary) -->
-<!-- assert return_format(bounded_JSON) — 50% speed gain [VERIFIED: CWD doc] -->
+<!-- assert return_format(bounded_JSON) — bounded JSON is easier to parse deterministically than prose; specific speed-gain figures are unverified for this repo -->
 
 **Format:** Bounded JSON schema ONLY.
 **Token Limit:** ≤500 tokens total payload.
@@ -37,7 +37,9 @@ RESTRICTED: return_format NOT matching schema above
 ## Constraints
 <!-- assert NOT read(env_files) -->
 <!-- assert NOT write(FAILURE_LEDGER) WITHOUT confirmed_tool_error -->
-**Rule Check:** Read domain rule in `.claude/rules/[domain].md` BEFORE any file edit.
+**Rule Check:** domain rules load automatically on Read of a matching file (`paths:` frontmatter) —
+do not manually read them first. Exception: creating the first file in an untouched domain
+does not trigger loading; Read a sibling file or the rule file itself before that Write.
 **Failure Logging:** On any non-zero exit or permission denial, append to `FAILURE_LEDGER.md`.
 **Boundaries:** [prohibited actions — specific to delegation scope]
 

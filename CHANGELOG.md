@@ -11,7 +11,70 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-### Chore
+### Fixed — 2026-09-18 context-engineering audit remediation
+A context-engineering audit (external report, 2026-09-18, commit `a1a1c49`) found the framework's
+central claim — that path-scoped rules "cost zero tokens at startup" — was not implemented:
+none of the 13 rule files had `paths:` frontmatter, `settings.json`'s `permissions`/`hooks`
+blocks did not match the documented schema, and several always-loaded files contradicted
+each other about how rules load. This release closes that gap (audit recommendations R01–R06):
+
+- **R01 (Safety, P0):** `.claude/settings.json` `permissions` rewritten from a non-standard
+  array shape into the documented `{allow, ask, deny}` string-rule schema. `deny` now blocks
+  `Read`/`Edit`/`Write` of `.env*`, `secrets/**`, `credentials/**`, `*.pem`, `*.key`, plus
+  `Bash` denies for `sudo`, destructive `rm -rf`/`rm -fr`, and `cat` of the same paths.
+  `.claudeignore` is no longer described as a security control anywhere in the docs
+  (README, GEMINI.md, file-topology.md) — it is a token-ingestion filter only, and multiple
+  upstream reports say it isn't consistently honored even for that.
+- **R02:** All 13 `.claude/rules/*.md` now carry real `paths:` frontmatter and load on Read
+  of a matching file, matching Claude Code's documented path-scoped memory mechanism. The
+  `.env*`/`secrets/**`/`credentials/**` read-prohibitions in `api.md`/`security.md` were
+  replaced with a pointer to the new `permissions.deny` enforcement (rule text loads too
+  late to stop a first read); the token-efficiency read-prohibitions in `dependencies.md`,
+  `infra.md`, `monitoring.md`, `testing.md`, `docs.md` are kept but marked advisory-only for
+  the same reason. Known residual gap, documented in `CLAUDE.md`: loading triggers on Read,
+  not on Write of a brand-new file in a previously-untouched domain.
+- **R03:** Removed the "Domain Rule Index (Manual Load)" mandatory-read section from
+  `CLAUDE.md` (it contradicted the `path_scoped_injection_only` invariant one line above it,
+  and duplicated the now-real native loading). Merged the two divergent `QUICK-REF.md`
+  files (root + `.claude/`) into one canonical root copy. Reconciled `.claude/DEPRECATED.md`,
+  `IMPLEMENTATION_NOTES.md`, and `GEMINI.md` with what is now actually implemented.
+- **R04:** `.claude/hooks/hooks.json` (a non-conformant `{trigger, action}` array that
+  `.claude/DEPRECATED.md` itself called inert) replaced with hooks registered inline in
+  `.claude/settings.json` → `hooks`, in the documented event-keyed schema: `SessionStart`
+  (session banner, now pointing at `/context` instead of the nonexistent `/tokens`) and
+  `PreCompact` (runs `.claude/hooks/pre-compact.sh`). Deleted the live-only debug hook
+  `.claude/hooks/pre-tool-use.sh`, which wrote every tool input to an un-ignored
+  `hook_debug.log`. Fixed a pre-existing bug in `pre-compact.sh` that crashed when no
+  failure patterns matched piped input (missing temp-file initialization).
+- **R05:** Replaced `[VERIFIED: CWD doc]` tags in `CLAUDE.md` and `settings.json`
+  (`model_routing`, `cache_epoch_versioning` rationale strings, the 17%/67%/94.8%/4-5x
+  figures) with honest "unverified external claim" labels — none were reproducible against
+  this repository. Resolved the context-threshold contradiction: 38%/43.2%/80% are now
+  documented as layered self-enforcement checkpoints over a session, not three sequential
+  milestones in one monotonic climb. Removed the operation-count heuristic (`[Op X/80]`
+  tagging, `DECISIONS.md` at 50 ops) in favor of the real `/context` command; `/tokens`
+  (never a real Claude Code command) removed from every file that referenced it.
+- **R06 (Hygiene):** Purged 5 test-fixture entries from `FAILURE_LEDGER.md` (it is now
+  genuinely empty of non-project failures). `pre-compact.sh` now enforces its own
+  `MAX_SIZE` by rotating out the oldest ledger records instead of leaving it unused.
+  `CLAUDE.md` normalized to LF (was CRLF, causing false drift against the mirror). Deleted
+  the tracked-despite-`.gitignore` empty placeholder `.claude/snapshots/pre-compact-{timestamp}.md`.
+  `CLAUDE.md`'s manual failure-logging workflow now appends via `grep`-dedupe instead of a
+  full-file `Read` + `Write`.
+- `scripts/framework/` mirror re-synced to match every change above (file count: 26 → 25,
+  reflecting the removal of `hooks.json`). `scripts/bootstrap-claude-framework.sh` and
+  `.agents/rules/file-topology.md` updated to match. In the process found
+  `scripts/framework/docs/setup.md` had drifted to genuinely different, older content
+  (not just line endings) from the live `docs/setup.md` — resynced to match live, per the
+  sync workflow's own "live files are always canonical" rule.
+- `README.md`: corrected the `.env`/`.claudeignore` anti-pattern claim, the `hooks.json`
+  references, the settings.json example, the Tree-sitter "90% reduction" claim (unimplemented
+  v3 design idea, not shipped), and the "45,000–50,000 tokens" figure (unverified estimate).
+- `docs/framework/PATH_A_VALIDATION.md` and `FRAMEWORK_WALKTHROUGH.md` annotated as
+  hypothetical desk-checks (never actually run) rather than measured results.
+- **Not implemented (R07, by design):** the audit flagged that this repo's `CLAUDE.md` is
+  the consumer-facing template, with no separate maintainer context — left as an open
+  decision for the maintainer, per the audit's own "needs the maintainer's decision" framing.
 - **Documentation**: Deleted stale `ROADMAP.md` (legacy research-heavy vision doc).
 - **Audit**: Completed documentation rot audit; purged all phase-specific roadmaps and stale templates.
 

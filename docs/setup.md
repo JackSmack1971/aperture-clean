@@ -27,9 +27,10 @@ Example `settings.local.json`:
 ```
 
 ## 4. First Session Checklist
-- [ ] Run `/tokens` to establish a context baseline.
+- [ ] Run `/context` to establish a context baseline (there is no `/tokens` command).
 - [ ] Review `FAILURE_LEDGER.md` for known pitfalls in this repo.
-- [ ] Ensure `.claudeignore` is active (prevents `node_modules` ingestion).
+- [ ] `.claudeignore` reduces incidental token ingestion (e.g. `node_modules`) but is not a
+      security control — credential-file protection is `.claude/settings.json` `permissions.deny`.
 - [ ] Use the WISC protocol: **W**rite, **I**solate, **S**elect, **C**ompress.
 
 ## 5. Directory Structure Overview
